@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"E:\programs\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.general.xcl" --backend -f "E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.driver.xcl" 
+"E:\programs\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.general.xcl" --backend -f "E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"E:\programs\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.general.xcl" "--debug_file=%~1" --backend -f "E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.driver.xcl" 
+"E:\programs\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.general.xcl" "--debug_file=%~1" --backend -f "E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\settings\SimpleApp.SimpleSensorEB.driver.xcl" 
 
 @echo off 
 :end

@@ -1,43 +1,4 @@
 
-/**************************************************************************************************
-  Filename:       SimpleCollector.c
-  Revised:        $Date: 2008-04-03 11:05:31 -0700 (Thu, 03 Apr 2008) $
-  Revision:       $Revision: 16711 $
-
-  Description:    Sample application utilizing the Simple API.
-
-
-  Copyright 2007 Texas Instruments Incorporated. All rights reserved.
-
-  IMPORTANT: Your use of this Software is limited to those specific rights
-  granted under the terms of a software license agreement between the user
-  who downloaded the software, his/her employer (which must be your employer)
-  and Texas Instruments Incorporated (the "License").  You may not use this
-  Software unless you agree to abide by the terms of the License. The License
-  limits your use, and you acknowledge, that the Software may not be modified,
-  copied or distributed unless embedded on a Texas Instruments microcontroller
-  or used solely and exclusively in conjunction with a Texas Instruments radio
-  frequency transceiver, which is integrated into your product.  Other than for
-  the foregoing purpose, you may not use, reproduce, copy, prepare derivative
-  works of, modify, distribute, perform, display or sell this Software and/or
-  its documentation for any purpose.
-
-  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, 
-  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE, 
-  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
-  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
-  NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR OTHER
-  LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-  INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE
-  OR CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT
-  OF SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-  (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-
-  Should you have any questions regarding your right to use this Software,
-  contact Texas Instruments Incorporated at www.TI.com. 
-**************************************************************************************************/
-
 /******************************************************************************
  * INCLUDES
  */
@@ -121,6 +82,9 @@ const SimpleDescriptionFormat_t zb_SimpleDesc =
  */
 void zb_HandleOsalEvent( uint16 event )
 {
+  uint8 startOptions;
+  uint8 logicalType;
+  
   if( event & ZB_ENTRY_EVENT ){
     halUARTCfg_t uConfig;
     uConfig.configured = TRUE; 
@@ -132,9 +96,19 @@ void zb_HandleOsalEvent( uint16 event )
     uConfig.tx.maxBufSize = 128;      
     uConfig.intEnable = TRUE;//enable interrupts
     uConfig.callBackFunc = &Uart0_Cb;
-    //uConfig.callBackFunc = 0;    
     HalUARTOpen(HAL_UART_PORT_0,&uConfig);
     HalUARTWrite(HAL_UART_PORT_0,"\nZB_ENTRY_EVENT\n", (byte)osal_strlen("\nZB_ENTRY_EVENT\n"));      
+    
+    startOptions = ZCD_STARTOPT_CLEAR_STATE | ZCD_STARTOPT_CLEAR_CONFIG;    
+    zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
+    
+    logicalType = ZG_DEVICETYPE_COORDINATOR;
+    zb_WriteConfiguration(ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType);
+    
+    zb_ReadConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
+    startOptions = ZCD_STARTOPT_AUTO_START;
+    zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
+    
   }
 }
 /*********************************************************************
@@ -153,95 +127,7 @@ void zb_HandleOsalEvent( uint16 event )
  */
 void zb_HandleKeys( uint8 shift, uint8 keys )
 {
-  uint8 startOptions;
-  uint8 logicalType;
-  
-  if( shift || keys )
-    HalUARTWrite(HAL_UART_PORT_0,"HandleKeys\n", (byte)osal_strlen("HandleKeys\n"));
-  
-
-  // Shift is used to make each button/switch dual purpose.
-  if ( shift )
-  {
-    if ( keys & HAL_KEY_SW_1 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_2 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_3 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_4 )
-    {
-    }
-  }
-  else
-  {
-    if ( keys & HAL_KEY_SW_1 )
-    {
-      if ( myAppState == APP_INIT  )
-      {
-        // In the init state, keys are used to indicate the logical mode.
-        // Key 1 starts device as a coordinator
-
-        zb_ReadConfiguration( ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType );
-        if ( logicalType != ZG_DEVICETYPE_ENDDEVICE )
-        {
-          logicalType = ZG_DEVICETYPE_COORDINATOR;
-          zb_WriteConfiguration(ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType);
-        }
-
-        // Do more configuration if necessary and then restart device with auto-start bit set
-        // write endpoint to simple desc...dont pass it in start req..then reset
-
-
-        zb_ReadConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-        startOptions = ZCD_STARTOPT_AUTO_START;
-        zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-        zb_SystemReset();
-
-      }
-      else
-      {
-        // Turn ON Allow Bind mode indefinitely
-        zb_AllowBind( 0xFF );
-        HalLedSet( HAL_LED_1, HAL_LED_MODE_ON );
-      }
-    }
-    if ( keys & HAL_KEY_SW_2 )
-    {
-      if ( myAppState == APP_INIT )
-      {
-        // In the init state, keys are used to indicate the logical mode.
-        // Key 2 starts device as a router
-
-        zb_ReadConfiguration( ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType );
-        if ( logicalType != ZG_DEVICETYPE_ENDDEVICE )
-        {
-          logicalType = ZG_DEVICETYPE_ROUTER;
-          zb_WriteConfiguration(ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType);
-        }
-
-        zb_ReadConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-        startOptions = ZCD_STARTOPT_AUTO_START;
-        zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-        zb_SystemReset();
-      }
-      else
-      {
-        // Turn OFF Allow Bind mode indefinitely
-        zb_AllowBind( 0x00 );
-        HalLedSet( HAL_LED_1, HAL_LED_MODE_OFF );
-      }
-    }
-    if ( keys & HAL_KEY_SW_3 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_4 )
-    {
-    }
-  }
+  return;
 }
 /******************************************************************************
  * @fn          zb_StartConfirm
@@ -262,6 +148,7 @@ void zb_StartConfirm( uint8 status )
   if ( status == ZB_SUCCESS )//Bay h da xac dinh dc logicMode
   {
     myAppState = APP_START;
+    zb_AllowBind( 0xFF );
   }
   else
   {
@@ -283,13 +170,13 @@ void zb_StartConfirm( uint8 status )
 void zb_SendDataConfirm( uint8 handle, uint8 status )
 {
   HalUARTWrite(HAL_UART_PORT_0,"SendDataConfirm ", (byte)osal_strlen("SendDataConfirm ")); 
-  if ( status != ZSuccess )
+  /*if ( status != ZSuccess )
   { 
     HalUARTWrite(HAL_UART_PORT_0,"Fail\n", (byte)osal_strlen("Fail\n"));
   }
   else {
     HalUARTWrite(HAL_UART_PORT_0,"Success\n", (byte)osal_strlen("Success\n"));
-  }
+  }*/
 }
 /******************************************************************************
  * @fn          zb_BindConfirm
@@ -304,7 +191,7 @@ void zb_SendDataConfirm( uint8 handle, uint8 status )
  */
 void zb_BindConfirm( uint16 commandId, uint8 status )
 {
-  HalUARTWrite(HAL_UART_PORT_0,"BindConfirm\n", (byte)osal_strlen("BindConfirm\n")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"BindConfirm\n", (byte)osal_strlen("BindConfirm\n")); 
 }
 /******************************************************************************
  * @fn          zb_AllowBindConfirm
@@ -333,7 +220,7 @@ void zb_AllowBindConfirm( uint16 source )
  */
 void zb_FindDeviceConfirm( uint8 searchType, uint8 *searchKey, uint8 *result )
 {
-  HalUARTWrite(HAL_UART_PORT_0,"FindDeviceConfirm\n", (byte)osal_strlen("FindDeviceConfirm\n")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"FindDeviceConfirm\n", (byte)osal_strlen("FindDeviceConfirm\n")); 
 }
 /******************************************************************************
  * @fn          zb_ReceiveDataIndication
@@ -349,69 +236,18 @@ void zb_FindDeviceConfirm( uint8 searchType, uint8 *searchKey, uint8 *result )
  *
  * @return      none
  */
-CONST uint8 strDevice[] = "Device:0x";
-CONST uint8 strTemp[] = "Temp: ";
-CONST uint8 strBattery[] = "Battery: ";
+
 void zb_ReceiveDataIndication( uint16 source, uint16 command, uint16 len, uint8 *pData,int8 r_power  )
 {
-  uint8 buf[32];
-  uint8 *pBuf;
-  uint8 tmpLen;
-  uint8 sensorReading;
 
   if (command == SENSOR_REPORT_CMD_ID)
   {
-    HalUARTWrite(HAL_UART_PORT_0,"RECEI: ", (byte)osal_strlen("RECEI: ")); 
-    // Received report from a sensor
-    sensorReading = pData[1];
-
-    // If tool available, write to serial port
-
-    tmpLen = (uint8)osal_strlen( (char*)strDevice );
-    pBuf = osal_memcpy( buf, strDevice, tmpLen );
-    _ltoa( source, pBuf, 16 );
-    pBuf += 4;
-    *pBuf++ = ' ';
-
-    if ( pData[0] == BATTERY_REPORT )
-    {
-      tmpLen = (uint8)osal_strlen( (char*)strBattery );
-      pBuf = osal_memcpy( pBuf, strBattery, tmpLen );
-
-      *pBuf++ = (sensorReading / 10 ) + '0';    // convent msb to ascii
-      *pBuf++ = '.';                            // decimal point ( battery reading is in units of 0.1 V
-      *pBuf++ = (sensorReading % 10 ) + '0';    // convert lsb to ascii
-      *pBuf++ = ' ';
-      *pBuf++ = 'V';
-    }
-    else
-    {
-      tmpLen = (uint8)osal_strlen( (char*)strTemp );
-      pBuf = osal_memcpy( pBuf, strTemp, tmpLen );
-
-      *pBuf++ = (sensorReading / 10 ) + '0';    // convent msb to ascii
-      *pBuf++ = (sensorReading % 10 ) + '0';    // convert lsb to ascii
-      *pBuf++ = ' ';
-      *pBuf++ = 'C';
-    }
-
-    *pBuf++ = '\r';
-    *pBuf++ = '\n';
-    *pBuf = '\0';
-
-#if defined( MT_TASK )
-    debug_str( (uint8 *)buf );
-#endif
-
-    // can also write directly to uart
-    HalUARTWrite(HAL_UART_PORT_0,buf, (byte)osal_strlen((char *)buf)); 
 
   }
 }
 
 static void Uart0_Cb(uint8 port, uint8 event){
-  uint8 startOptions;
-  uint8 logicalType;
+  
   if ((event&HAL_UART_RX_TIMEOUT) || (event&HAL_UART_RX_ABOUT_FULL)){
     uint8  ch;
     while (Hal_UART_RxBufLen(port))
@@ -425,64 +261,15 @@ static void Uart0_Cb(uint8 port, uint8 event){
         zb_SendDataRequest( 0xFFFF, CTRL_PUMP_CMD_ID, 1, &pData, 0, FALSE, 0 );
         pData = ~pData;
       }else if( ch == '1' ){
-        if ( myAppState == APP_INIT )
-        {
-          HalUARTWrite(HAL_UART_PORT_0,"StartCoord\n", (byte)osal_strlen("StartCoord\n")); 
-
-          // In the init state, keys are used to indicate the logical mode.
-          // Key 1 starts device as a coordinator
-
-          zb_ReadConfiguration( ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType );
-          if ( logicalType != ZG_DEVICETYPE_ENDDEVICE )
-          {
-            logicalType = ZG_DEVICETYPE_COORDINATOR;
-            zb_WriteConfiguration(ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType);
-          }
-
-          // Do more configuration if necessary and then restart device with auto-start bit set
-          // write endpoint to simple desc...dont pass it in start req..then reset
-
-
-          zb_ReadConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-          startOptions = ZCD_STARTOPT_AUTO_START;
-          zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-          zb_SystemReset();
-        }
+        
       }else if( ch == '2' ){
-        if ( myAppState == APP_INIT )
-        {
-          HalUARTWrite(HAL_UART_PORT_0,"StartRout\n", (byte)osal_strlen("StartRout\n")); 
-          
-          // In the init state, keys are used to indicate the logical mode.
-          // Key 2 starts device as a router
-
-          zb_ReadConfiguration( ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType );
-          if ( logicalType != ZG_DEVICETYPE_ENDDEVICE )
-          {
-            logicalType = ZG_DEVICETYPE_ROUTER;
-            zb_WriteConfiguration(ZCD_NV_LOGICAL_TYPE, sizeof(uint8), &logicalType);
-          }
-
-          zb_ReadConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-          startOptions = ZCD_STARTOPT_AUTO_START;
-          zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-          zb_SystemReset();
-        }
+        
       }else if( ch == '3' ){
         
       }else if( ch == '4' ){
-        
-        HalUARTWrite(HAL_UART_PORT_0,"ClearSTARTUP_OPTION\n", (byte)osal_strlen("ClearSTARTUP_OPTION\n")); 
-        
-        // If SW5 is pressed and held while powerup, force auto-start and nv-restore off and reset
-        uint8 startOptions = ZCD_STARTOPT_CLEAR_STATE | ZCD_STARTOPT_CLEAR_CONFIG;
-        zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
-        zb_SystemReset();
-        
-      }else if( ch == '5' ){
         HalUARTWrite(HAL_UART_PORT_0,"AllowBind\n", (byte)osal_strlen("AllowBind\n")); 
         zb_AllowBind( 0xFF );
-      }else if( ch == '6' ){
+      }else if( ch == '5' ){
         HalUARTWrite(HAL_UART_PORT_0,"NoAllowBind\n", (byte)osal_strlen("NoAllowBind\n")); 
         zb_AllowBind( 0 );
       }
