@@ -16,7 +16,7 @@
 /*********************************************************************
  * CONSTANTS
  */
-
+#define MY_ID  (uint8)1
 // Application States
 #define APP_INIT                           0    // Initial state
 #define APP_START                          1    // Sensor has joined network
@@ -28,6 +28,7 @@
 #define MY_REPORT_TEMP_EVT          0x0002
 #define MY_REPORT_BATT_EVT          0x0004
 #define MY_FIND_COLLECTOR_EVT       0x0008
+#define ID_REPORT_EVT               0x0010
 
 // ADC definitions for CC2430/CC2530 from the hal_adc.c file
 #if defined (HAL_MCU_CC2430) || defined (HAL_MCU_CC2530)
@@ -53,6 +54,7 @@ static uint16 myStartRetryDelay = 5000;      // milliseconds
 static uint16 myTempReportPeriod = 5000;     // milliseconds
 static uint16 myBatteryCheckPeriod = 15000;   // milliseconds
 static uint16 myBindRetryDelay = 4000;       // milliseconds
+static uint16 myIdReportPeriod = 4000;     // milliseconds
 
 static void Uart0_Cb(uint8 port, uint8 event);
 
@@ -76,8 +78,8 @@ const cId_t zb_InCmdList[NUM_IN_CMD_SENSOR] =
 };
 
 #define TEMP_REPORT     0x01
-#define BATTERY_REPORT 0x02
-
+#define BATTERY_REPORT  0x02
+#define ID_REPORT       0x04
 
 // Define SimpleDescriptor for Sensor device
 const SimpleDescriptionFormat_t zb_SimpleDesc =
@@ -115,10 +117,11 @@ static uint8 myApp_ReadBattery( void );
  */
 void zb_HandleOsalEvent( uint16 event )
 {
-  uint8 pData[2];
+  static uint8 pData[2];
   uint8 startOptions;
   uint8 logicalType;
-
+  
+  
   if ( event & ZB_ENTRY_EVENT )
   {
     halUARTCfg_t uConfig;
@@ -169,6 +172,16 @@ void zb_HandleOsalEvent( uint16 event )
   {
     HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
     zb_BindDevice( TRUE, SENSOR_REPORT_CMD_ID, (uint8 *)NULL );
+  }
+  
+  if ( event & ID_REPORT_EVT )
+  {
+    pData[0] = ID_REPORT;
+    pData[1] =  MY_ID;
+    zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
+    //0xFFFE Gui toi thiet bi dang Bind
+    HalUARTWrite(HAL_UART_PORT_0,"REPORT_ID\n", (byte)osal_strlen("REPORT_ID\n")); 
+    osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
   }
 
 }
@@ -346,9 +359,10 @@ void zb_ReceiveDataIndication( uint16 source, uint16 command, uint16 len, uint8 
  */
 void myApp_StartReporting( void )
 {
-  osal_start_timerEx( sapi_TaskID, MY_REPORT_TEMP_EVT, myTempReportPeriod );
-  osal_start_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT, myBatteryCheckPeriod );
-  HalLedSet( HAL_LED_1, HAL_LED_MODE_ON );
+  //osal_start_timerEx( sapi_TaskID, MY_REPORT_TEMP_EVT, myTempReportPeriod );
+  //osal_start_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT, myBatteryCheckPeriod );
+  osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
+  //HalLedSet( HAL_LED_1, HAL_LED_MODE_ON );
   
   HalUARTWrite(HAL_UART_PORT_0,"StartReporting\n", (byte)osal_strlen("StartReporting\n")); 
 
@@ -364,9 +378,10 @@ void myApp_StartReporting( void )
  */
 void myApp_StopReporting( void )
 {
-  osal_stop_timerEx( sapi_TaskID, MY_REPORT_TEMP_EVT );
-  osal_stop_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT );
-  HalLedSet( HAL_LED_1, HAL_LED_MODE_OFF );
+  //osal_stop_timerEx( sapi_TaskID, MY_REPORT_TEMP_EVT );
+  //osal_stop_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT );
+  osal_stop_timerEx( sapi_TaskID, ID_REPORT_EVT );
+  //HalLedSet( HAL_LED_1, HAL_LED_MODE_OFF );
   
   HalUARTWrite(HAL_UART_PORT_0,"StopReporting\n", (byte)osal_strlen("StopReporting\n")); 
 }
@@ -594,16 +609,25 @@ uint8 myApp_ReadTemperature( void )
 }
 
 static void Uart0_Cb(uint8 port, uint8 event){
-  
-  if ((event&HAL_UART_RX_TIMEOUT) || (event&HAL_UART_RX_ABOUT_FULL)){
-    uint8  ch;
+  uint8  ch;
+  uint8 startOptions;
+  if ((event&HAL_UART_RX_TIMEOUT) || (event&HAL_UART_RX_ABOUT_FULL)){    
     while (Hal_UART_RxBufLen(port))
     {
       HalUARTRead ( port, &ch, 1);
-      if( ch == '1' ){
+      if( ch == '?' ){
+        HalUARTWrite(HAL_UART_PORT_0,"\nEndDevice:", (byte)osal_strlen("\nEndDevice:"));  
+        if(MY_ID==1)
+          HalUARTWrite(HAL_UART_PORT_0,"1\n", (byte)osal_strlen("1\n"));  
+        else if(MY_ID==2)
+          HalUARTWrite(HAL_UART_PORT_0,"2\n", (byte)osal_strlen("2\n"));  
+        else if(MY_ID==3)
+          HalUARTWrite(HAL_UART_PORT_0,"3\n", (byte)osal_strlen("3\n"));  
         
-      }else if( ch == '2' ){
-            
+      }else if( ch == 'r' ){
+          startOptions = ZCD_STARTOPT_CLEAR_STATE | ZCD_STARTOPT_CLEAR_CONFIG;
+          zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
+          zb_SystemReset();
       }else if( ch == '3' ){        
         
       }

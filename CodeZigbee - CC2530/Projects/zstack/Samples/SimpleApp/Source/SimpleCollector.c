@@ -239,39 +239,42 @@ void zb_FindDeviceConfirm( uint8 searchType, uint8 *searchKey, uint8 *result )
 
 void zb_ReceiveDataIndication( uint16 source, uint16 command, uint16 len, uint8 *pData,int8 r_power  )
 {
-
-  if (command == SENSOR_REPORT_CMD_ID)
-  {
-
+  static uint8 sendData[3];
+  if (command == SENSOR_REPORT_CMD_ID && len >=2 )
+  {     
+    sendData[0] = '#';
+    sendData[1] = *(pData+1);
+    sendData[2] = r_power;
+    HalUARTWrite(HAL_UART_PORT_0,sendData, (byte)3);  
+    
   }
 }
 
 static void Uart0_Cb(uint8 port, uint8 event){
-  
+  uint8  ch;
+  uint8 startOptions;
   if ((event&HAL_UART_RX_TIMEOUT) || (event&HAL_UART_RX_ABOUT_FULL)){
-    uint8  ch;
     while (Hal_UART_RxBufLen(port))
     {
-      HalUARTRead ( port, &ch, 1);
-      if( ch == '0' ){
-        static uint8 pData = 1;
-        //0xFFFF Gui toi tat ca thiet bi khac
-        //0xFFFD Gui toi thiet bi dang turned ON
-        //0xFFFD Gui toi thiet bi la Coor va Rout
+      HalUARTRead ( port, &ch, 1);      
+      //0xFFFF Gui toi tat ca thiet bi khac
+      //0xFFFD Gui toi thiet bi dang turned ON
+      //0xFFFD Gui toi thiet bi la Coor va Rout
+      if( ch == '?' ){
+        HalUARTWrite(HAL_UART_PORT_0,"\nCoordinator\n", (byte)osal_strlen("\nCoordinator\n"));  
+      }
+      else if( ch == 'r' )
+      {
+          startOptions = ZCD_STARTOPT_CLEAR_STATE | ZCD_STARTOPT_CLEAR_CONFIG;
+          zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
+          zb_SystemReset();
+      }
+      else if( ch == 's' )
+      {        
+        static uint8 pData = 1;        
         zb_SendDataRequest( 0xFFFF, CTRL_PUMP_CMD_ID, 1, &pData, 0, FALSE, 0 );
         pData = ~pData;
-      }else if( ch == '1' ){
-        
-      }else if( ch == '2' ){
-        
-      }else if( ch == '3' ){
-        
-      }else if( ch == '4' ){
-        HalUARTWrite(HAL_UART_PORT_0,"AllowBind\n", (byte)osal_strlen("AllowBind\n")); 
-        zb_AllowBind( 0xFF );
-      }else if( ch == '5' ){
-        HalUARTWrite(HAL_UART_PORT_0,"NoAllowBind\n", (byte)osal_strlen("NoAllowBind\n")); 
-        zb_AllowBind( 0 );
+        HalUARTWrite(HAL_UART_PORT_0,"\nSent\n", (byte)osal_strlen("\nSent\n"));  
       }
       
     }

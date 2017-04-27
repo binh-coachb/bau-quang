@@ -1,48 +1,48 @@
-"E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\ZMain\TI2530DB\OnBoard.c"
+"E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\ZMain\TI2530DB\OnBoard.c"
 -std=c99
 -ferror-limit=100
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\Source
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\Source
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\ZMain\TI2530DB
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\ZMain\TI2530DB
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\hal\include
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\hal\include
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\hal\target\CC2530EB
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\hal\target\CC2530EB
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\include
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\include
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\high_level
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\high_level
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\low_level\srf04
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\low_level\srf04
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\low_level\srf04\single_chip
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mac\low_level\srf04\single_chip
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mt
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\mt
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\osal\include
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\osal\include
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\services\saddr
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\services\saddr
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\services\sdata
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\services\sdata
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\af
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\af
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\nwk
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\nwk
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\sapi
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\sapi
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\sec
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\sec
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\sys
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\sys
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\zdo
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\stack\zdo
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\zmac
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\zmac
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\zmac\f8w
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB\..\..\..\..\..\Components\zmac\f8w
 -I
 E:\programs\IAR Systems\Embedded Workbench 7.3\8051\inc
 -I
@@ -50,47 +50,47 @@ E:\programs\IAR Systems\Embedded Workbench 7.3\8051\lib\dlib
 -I
 E:\programs\IAR Systems\Embedded Workbench 7.3\8051\inc\clib
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\CC2530DB
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\CC2530DB
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\Samples\SimpleApp\Source
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Projects\zstack\ZMain\TI2530DB
+E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\ZMain\TI2530DB
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\hal\include
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\hal\include
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\hal\target\CC2530EB
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\hal\target\CC2530EB
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\mac\include
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\mac\include
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\mac\high_level
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\mac\high_level
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\mac\low_level\srf04
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\mac\low_level\srf04
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\mac\low_level\srf04\single_chip
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\mac\low_level\srf04\single_chip
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\mt
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\mt
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\osal\include
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\osal\include
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\services\saddr
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\services\saddr
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\services\sdata
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\services\sdata
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\stack\af
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\stack\af
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\stack\nwk
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\stack\nwk
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\stack\sapi
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\stack\sapi
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\stack\sec
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\stack\sec
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\stack\sys
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\stack\sys
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\stack\zdo
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\stack\zdo
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\zmac
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\zmac
 -I
-E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\zmac\f8w
+E:\DAT\bau-quang\CodeZigbee - CC2530\Components\zmac\f8w
 -DNWK_AUTO_POLL=1
 -DHOLD_AUTO_START=1
 -DREFLECTOR=1
@@ -442,8 +442,8 @@ E:\Zigbee\Code Zigbee - ZStack-CC2530-GIAU\Components\zmac\f8w
 -DZIGBEEPRO=1
 -DSECURE=0
 -DZG_SECURE_DYNAMIC=0
--DDEFAULT_CHANLIST=0x00001000
--DZDAPP_CONFIG_PAN_ID=0x6699
+-DDEFAULT_CHANLIST=0x00002000
+-DZDAPP_CONFIG_PAN_ID=0x1111
 -DNWK_START_DELAY=100
 -DEXTENDED_JOINING_RANDOM_MASK=0x007F
 -DBEACON_REQUEST_DELAY=100
