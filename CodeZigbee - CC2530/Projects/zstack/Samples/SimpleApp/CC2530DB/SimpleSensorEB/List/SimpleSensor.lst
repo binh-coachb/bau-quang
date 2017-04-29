@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V9.30.3.3983 for 8051                27/Apr/2017  22:53:42
+# IAR C/C++ Compiler V9.30.3.3983 for 8051                29/Apr/2017  14:51:56
 # Copyright 2004-2016 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for 8051
 #
@@ -140,7 +140,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
      16          /*********************************************************************
      17           * CONSTANTS
      18           */
-     19          #define MY_ID  (uint8)1
+     19          #define MY_ID  (uint8)2
      20          // Application States
      21          #define APP_INIT                           0    // Initial state
      22          #define APP_START                          1    // Sensor has joined network
@@ -389,9 +389,9 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000069   12....       LCALL   ?XSTACK_DISP101_8
    \   00006C   7900         MOV     R1,#0x0
    \   00006E   12....       LCALL   `??HalUARTOpen::?relay`; Banked call to: HalUARTOpen
-    138              HalUARTWrite(HAL_UART_PORT_0,"\nZB_ENTRY_EVENT\n", (byte)osal_strlen("\nZB_ENTRY_EVENT\n")); 
-   \   000071   75....       MOV     ?V0,#`?<Constant "\\nZB_ENTRY_EVENT\\n">` & 0xff
-   \   000074   75....       MOV     ?V1,#(`?<Constant "\\nZB_ENTRY_EVENT\\n">` >> 8) & 0xff
+    138              HalUARTWrite(HAL_UART_PORT_0,"\nENTRY\n", (byte)osal_strlen("\nENTRY\n")); 
+   \   000071   75....       MOV     ?V0,#`?<Constant "\\nENTRY\\n">` & 0xff
+   \   000074   75....       MOV     ?V1,#(`?<Constant "\\nENTRY\\n">` >> 8) & 0xff
    \   000077                ; Setup parameters for call to function osal_strlen
    \   000077   AA..         MOV     R2,?V0
    \   000079   AB..         MOV     R3,?V1
@@ -505,9 +505,9 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000118   12....       LCALL   ?US_DIV_MOD
    \   00011B   E8           MOV     A,R0
    \   00011C   A3           INC     DPTR
-   \   00011D   12....       LCALL   ?Subroutine3 & 0xFFFF
+   \   00011D   12....       LCALL   ?Subroutine2 & 0xFFFF
     156              zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
-   \                     ??CrossCallReturnLabel_2:
+   \                     ??CrossCallReturnLabel_0:
    \   000120   12....       LCALL   ?PUSH_XSTACK_I_ONE
    \   000123   75..10       MOV     ?V0,#0x10
    \   000126   78..         MOV     R0,#?V0
@@ -528,227 +528,178 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   00014B   7405         MOV     A,#0x5
    \   00014D   12....       LCALL   ?DEALLOC_XSTACK8
     157              //0xFFFE Gui toi thiet bi dang Bind
-    158              HalUARTWrite(HAL_UART_PORT_0,"REPORT_TEMP\n", (byte)osal_strlen("REPORT_TEMP\n")); 
-   \   000150   75....       MOV     ?V0,#`?<Constant "REPORT_TEMP\\n">` & 0xff
-   \   000153   75....       MOV     ?V1,#(`?<Constant "REPORT_TEMP\\n">` >> 8) & 0xff
-   \   000156                ; Setup parameters for call to function osal_strlen
-   \   000156   AA..         MOV     R2,?V0
-   \   000158   AB..         MOV     R3,?V1
-   \   00015A   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   00015D   8A..         MOV     ?V2,R2
-   \   00015F                ; Setup parameters for call to function HalUARTWrite
-   \   00015F   AC..         MOV     R4,?V2
-   \   000161   7D00         MOV     R5,#0x0
-   \   000163   AA..         MOV     R2,?V0
-   \   000165   AB..         MOV     R3,?V1
-   \   000167   7900         MOV     R1,#0x0
-   \   000169   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+    158              //HalUARTWrite(HAL_UART_PORT_0,"REPORT_TEMP\n", (byte)osal_strlen("REPORT_TEMP\n")); 
     159              osal_start_timerEx( sapi_TaskID, MY_REPORT_TEMP_EVT, myTempReportPeriod );
-   \   00016C                ; Setup parameters for call to function osal_start_timerEx
-   \   00016C   90....       MOV     DPTR,#myTempReportPeriod
-   \   00016F   12....       LCALL   ??Subroutine4_0 & 0xFFFF
+   \   000150                ; Setup parameters for call to function osal_start_timerEx
+   \   000150   90....       MOV     DPTR,#myTempReportPeriod
+   \   000153   12....       LCALL   ??Subroutine4_0 & 0xFFFF
     160            }
-   \                     ??CrossCallReturnLabel_5:
-   \   000172   7A02         MOV     R2,#0x2
-   \   000174   7B00         MOV     R3,#0x0
-   \   000176   90....       MOV     DPTR,#sapi_TaskID
-   \   000179   E0           MOVX    A,@DPTR
-   \   00017A   F9           MOV     R1,A
-   \   00017B   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
+   \                     ??CrossCallReturnLabel_3:
+   \   000156   7A02         MOV     R2,#0x2
+   \   000158   7B00         MOV     R3,#0x0
+   \   00015A   90....       MOV     DPTR,#sapi_TaskID
+   \   00015D   E0           MOVX    A,@DPTR
+   \   00015E   F9           MOV     R1,A
+   \   00015F   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
     161          
     162            if ( event & MY_REPORT_BATT_EVT )
    \                     ??zb_HandleOsalEvent_1:
-   \   00017E   EE           MOV     A,R6
-   \   00017F   5404         ANL     A,#0x4
-   \   000181   7003         JNZ     $+5
-   \   000183   02....       LJMP    ??zb_HandleOsalEvent_5 & 0xFFFF
+   \   000162   EE           MOV     A,R6
+   \   000163   5404         ANL     A,#0x4
+   \   000165   7003         JNZ     $+5
+   \   000167   02....       LJMP    ??zb_HandleOsalEvent_5 & 0xFFFF
     163            {
     164              pData[0] = BATTERY_REPORT;
-   \   000186   90....       MOV     DPTR,#??pData
-   \   000189   7402         MOV     A,#0x2
-   \   00018B   F0           MOVX    @DPTR,A
+   \   00016A   90....       MOV     DPTR,#??pData
+   \   00016D   7402         MOV     A,#0x2
+   \   00016F   F0           MOVX    @DPTR,A
     165              pData[1] =  myApp_ReadBattery();
-   \   00018C   C28D         CLR     0x88.5
-   \   00018E   75B61F       MOV     0xb6,#0x1f
+   \   000170   C28D         CLR     0x88.5
+   \   000172   75B61F       MOV     0xb6,#0x1f
    \                     ??zb_HandleOsalEvent_6:
-   \   000191   A28D         MOV     C,0x88.5
-   \   000193   50FC         JNC     ??zb_HandleOsalEvent_6
-   \   000195   A8BA         MOV     R0,0xba+0x0
-   \   000197   ABBB         MOV     R3,0xbb
-   \   000199   E8           MOV     A,R0
-   \   00019A   F5..         MOV     ?V4,A
-   \   00019C   EB           MOV     A,R3
-   \   00019D   F5..         MOV     ?V5,A
-   \   00019F   7406         MOV     A,#0x6
-   \   0001A1   78..         MOV     R0,#?V4
-   \   0001A3   12....       LCALL   ?US_SHR
-   \   0001A6   F5..         MOV     ?V6,A
-   \   0001A8   F5..         MOV     ?V7,A
-   \   0001AA   78..         MOV     R0,#?V4
-   \   0001AC   12....       LCALL   ?UL_TO_FLT
-   \   0001AF   90....       MOV     DPTR,#__Constant_42160000
-   \   0001B2   78..         MOV     R0,#?V0
-   \   0001B4   12....       LCALL   ?L_MOV_X
-   \   0001B7   78..         MOV     R0,#?V4
-   \   0001B9   79..         MOV     R1,#?V0
-   \   0001BB   12....       LCALL   ?FLT_MUL
-   \   0001BE   78..         MOV     R0,#?V4
-   \   0001C0   12....       LCALL   ?FLT_TO_L
-   \   0001C3   7409         MOV     A,#0x9
-   \   0001C5   78..         MOV     R0,#?V4
-   \   0001C7   12....       LCALL   ?US_SHR
-   \   0001CA   E5..         MOV     A,?V4
-   \   0001CC   90....       MOV     DPTR,#??pData + 1
-   \   0001CF   12....       LCALL   ?Subroutine3 & 0xFFFF
+   \   000175   A28D         MOV     C,0x88.5
+   \   000177   50FC         JNC     ??zb_HandleOsalEvent_6
+   \   000179   A8BA         MOV     R0,0xba+0x0
+   \   00017B   ABBB         MOV     R3,0xbb
+   \   00017D   E8           MOV     A,R0
+   \   00017E   F5..         MOV     ?V4,A
+   \   000180   EB           MOV     A,R3
+   \   000181   F5..         MOV     ?V5,A
+   \   000183   7406         MOV     A,#0x6
+   \   000185   78..         MOV     R0,#?V4
+   \   000187   12....       LCALL   ?US_SHR
+   \   00018A   F5..         MOV     ?V6,A
+   \   00018C   F5..         MOV     ?V7,A
+   \   00018E   78..         MOV     R0,#?V4
+   \   000190   12....       LCALL   ?UL_TO_FLT
+   \   000193   90....       MOV     DPTR,#__Constant_42160000
+   \   000196   78..         MOV     R0,#?V0
+   \   000198   12....       LCALL   ?L_MOV_X
+   \   00019B   78..         MOV     R0,#?V4
+   \   00019D   79..         MOV     R1,#?V0
+   \   00019F   12....       LCALL   ?FLT_MUL
+   \   0001A2   78..         MOV     R0,#?V4
+   \   0001A4   12....       LCALL   ?FLT_TO_L
+   \   0001A7   7409         MOV     A,#0x9
+   \   0001A9   78..         MOV     R0,#?V4
+   \   0001AB   12....       LCALL   ?US_SHR
+   \   0001AE   E5..         MOV     A,?V4
+   \   0001B0   90....       MOV     DPTR,#??pData + 1
+   \   0001B3   12....       LCALL   ?Subroutine2 & 0xFFFF
     166              zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
-   \                     ??CrossCallReturnLabel_3:
-   \   0001D2   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   0001D5   75..10       MOV     ?V0,#0x10
-   \   0001D8   78..         MOV     R0,#?V0
-   \   0001DA   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   0001DD   75..00       MOV     ?V0,#0x0
-   \   0001E0   78..         MOV     R0,#?V0
-   \   0001E2   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   0001E5   75....       MOV     ?V0,#??pData & 0xff
-   \   0001E8   75....       MOV     ?V1,#(??pData >> 8) & 0xff
-   \   0001EB   78..         MOV     R0,#?V0
-   \   0001ED   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0001F0   7902         MOV     R1,#0x2
-   \   0001F2   7C02         MOV     R4,#0x2
-   \   0001F4   7D00         MOV     R5,#0x0
-   \   0001F6   7AFE         MOV     R2,#-0x2
-   \   0001F8   7BFF         MOV     R3,#-0x1
-   \   0001FA   12....       LCALL   `??zb_SendDataRequest::?relay`; Banked call to: zb_SendDataRequest
-   \   0001FD   7405         MOV     A,#0x5
-   \   0001FF   12....       LCALL   ?DEALLOC_XSTACK8
-    167              HalUARTWrite(HAL_UART_PORT_0,"REPORT_BATT\n", (byte)osal_strlen("REPORT_BATT\n")); 
-   \   000202   75....       MOV     ?V0,#`?<Constant "REPORT_BATT\\n">` & 0xff
-   \   000205   75....       MOV     ?V1,#(`?<Constant "REPORT_BATT\\n">` >> 8) & 0xff
-   \   000208                ; Setup parameters for call to function osal_strlen
-   \   000208   AA..         MOV     R2,?V0
-   \   00020A   AB..         MOV     R3,?V1
-   \   00020C   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   00020F   8A..         MOV     ?V2,R2
-   \   000211                ; Setup parameters for call to function HalUARTWrite
-   \   000211   AC..         MOV     R4,?V2
-   \   000213   7D00         MOV     R5,#0x0
-   \   000215   AA..         MOV     R2,?V0
-   \   000217   AB..         MOV     R3,?V1
-   \   000219   7900         MOV     R1,#0x0
-   \   00021B   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+   \                     ??CrossCallReturnLabel_1:
+   \   0001B6   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   0001B9   75..10       MOV     ?V0,#0x10
+   \   0001BC   78..         MOV     R0,#?V0
+   \   0001BE   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   0001C1   75..00       MOV     ?V0,#0x0
+   \   0001C4   78..         MOV     R0,#?V0
+   \   0001C6   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   0001C9   75....       MOV     ?V0,#??pData & 0xff
+   \   0001CC   75....       MOV     ?V1,#(??pData >> 8) & 0xff
+   \   0001CF   78..         MOV     R0,#?V0
+   \   0001D1   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   0001D4   7902         MOV     R1,#0x2
+   \   0001D6   7C02         MOV     R4,#0x2
+   \   0001D8   7D00         MOV     R5,#0x0
+   \   0001DA   7AFE         MOV     R2,#-0x2
+   \   0001DC   7BFF         MOV     R3,#-0x1
+   \   0001DE   12....       LCALL   `??zb_SendDataRequest::?relay`; Banked call to: zb_SendDataRequest
+   \   0001E1   7405         MOV     A,#0x5
+   \   0001E3   12....       LCALL   ?DEALLOC_XSTACK8
+    167              //HalUARTWrite(HAL_UART_PORT_0,"REPORT_BATT\n", (byte)osal_strlen("REPORT_BATT\n")); 
     168              osal_start_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT, myBatteryCheckPeriod );
-   \   00021E                ; Setup parameters for call to function osal_start_timerEx
-   \   00021E   90....       MOV     DPTR,#myBatteryCheckPeriod
-   \   000221   12....       LCALL   ??Subroutine4_0 & 0xFFFF
+   \   0001E6                ; Setup parameters for call to function osal_start_timerEx
+   \   0001E6   90....       MOV     DPTR,#myBatteryCheckPeriod
+   \   0001E9   12....       LCALL   ??Subroutine4_0 & 0xFFFF
     169            }
-   \                     ??CrossCallReturnLabel_6:
-   \   000224   7A04         MOV     R2,#0x4
-   \   000226   7B00         MOV     R3,#0x0
-   \   000228   90....       MOV     DPTR,#sapi_TaskID
-   \   00022B   E0           MOVX    A,@DPTR
-   \   00022C   F9           MOV     R1,A
-   \   00022D   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
+   \                     ??CrossCallReturnLabel_4:
+   \   0001EC   7A04         MOV     R2,#0x4
+   \   0001EE   7B00         MOV     R3,#0x0
+   \   0001F0   90....       MOV     DPTR,#sapi_TaskID
+   \   0001F3   E0           MOVX    A,@DPTR
+   \   0001F4   F9           MOV     R1,A
+   \   0001F5   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
     170          
     171            if ( event & MY_FIND_COLLECTOR_EVT )
    \                     ??zb_HandleOsalEvent_5:
-   \   000230   EE           MOV     A,R6
-   \   000231   5408         ANL     A,#0x8
-   \   000233   6029         JZ      ??zb_HandleOsalEvent_7
+   \   0001F8   EE           MOV     A,R6
+   \   0001F9   5408         ANL     A,#0x8
+   \   0001FB   600D         JZ      ??zb_HandleOsalEvent_7
     172            {
-    173              HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
-   \   000235   75....       MOV     ?V0,#`?<Constant "FIND_COLLECTOR\\n">` & 0xff
-   \   000238   75....       MOV     ?V1,#(`?<Constant "FIND_COLLECTOR\\n">` >> 8) & 0xff
-   \   00023B                ; Setup parameters for call to function osal_strlen
-   \   00023B   AA..         MOV     R2,?V0
-   \   00023D   AB..         MOV     R3,?V1
-   \   00023F   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   000242   8A..         MOV     ?V2,R2
-   \   000244                ; Setup parameters for call to function HalUARTWrite
-   \   000244   AC..         MOV     R4,?V2
-   \   000246   7D00         MOV     R5,#0x0
-   \   000248   AA..         MOV     R2,?V0
-   \   00024A   AB..         MOV     R3,?V1
-   \   00024C   7900         MOV     R1,#0x0
-   \   00024E   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+    173              //HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
     174              zb_BindDevice( TRUE, SENSOR_REPORT_CMD_ID, (uint8 *)NULL );
-   \   000251                ; Setup parameters for call to function zb_BindDevice
-   \   000251   7C00         MOV     R4,#0x0
-   \   000253   7D00         MOV     R5,#0x0
-   \   000255   7A02         MOV     R2,#0x2
-   \   000257   7B00         MOV     R3,#0x0
-   \   000259   7901         MOV     R1,#0x1
-   \   00025B   12....       LCALL   `??zb_BindDevice::?relay`; Banked call to: zb_BindDevice
+   \   0001FD                ; Setup parameters for call to function zb_BindDevice
+   \   0001FD   7C00         MOV     R4,#0x0
+   \   0001FF   7D00         MOV     R5,#0x0
+   \   000201   7A02         MOV     R2,#0x2
+   \   000203   7B00         MOV     R3,#0x0
+   \   000205   7901         MOV     R1,#0x1
+   \   000207   12....       LCALL   `??zb_BindDevice::?relay`; Banked call to: zb_BindDevice
     175            }
     176            
     177            if ( event & ID_REPORT_EVT )
    \                     ??zb_HandleOsalEvent_7:
-   \   00025E   EE           MOV     A,R6
-   \   00025F   5410         ANL     A,#0x10
-   \   000261   6058         JZ      ??zb_HandleOsalEvent_8
+   \   00020A   EE           MOV     A,R6
+   \   00020B   5410         ANL     A,#0x10
+   \   00020D   604B         JZ      ??zb_HandleOsalEvent_8
     178            {
     179              pData[0] = ID_REPORT;
-   \   000263   90....       MOV     DPTR,#??pData
-   \   000266   7404         MOV     A,#0x4
-   \   000268   F0           MOVX    @DPTR,A
+   \   00020F   90....       MOV     DPTR,#??pData
+   \   000212   7404         MOV     A,#0x4
+   \   000214   F0           MOVX    @DPTR,A
     180              pData[1] =  MY_ID;
-   \   000269   A3           INC     DPTR
-   \   00026A   7401         MOV     A,#0x1
-   \   00026C   12....       LCALL   ?Subroutine3 & 0xFFFF
+   \   000215   A3           INC     DPTR
+   \   000216   7402         MOV     A,#0x2
+   \   000218   12....       LCALL   ?Subroutine2 & 0xFFFF
     181              zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
-   \                     ??CrossCallReturnLabel_4:
-   \   00026F   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   000272   75..10       MOV     ?V0,#0x10
-   \   000275   78..         MOV     R0,#?V0
-   \   000277   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   00027A   75..00       MOV     ?V0,#0x0
-   \   00027D   78..         MOV     R0,#?V0
-   \   00027F   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   000282   75....       MOV     ?V0,#??pData & 0xff
-   \   000285   75....       MOV     ?V1,#(??pData >> 8) & 0xff
-   \   000288   78..         MOV     R0,#?V0
-   \   00028A   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   00028D   7902         MOV     R1,#0x2
-   \   00028F   7C02         MOV     R4,#0x2
-   \   000291   7D00         MOV     R5,#0x0
-   \   000293   7AFE         MOV     R2,#-0x2
-   \   000295   7BFF         MOV     R3,#-0x1
-   \   000297   12....       LCALL   `??zb_SendDataRequest::?relay`; Banked call to: zb_SendDataRequest
-   \   00029A   7405         MOV     A,#0x5
-   \   00029C   12....       LCALL   ?DEALLOC_XSTACK8
+   \                     ??CrossCallReturnLabel_2:
+   \   00021B   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   00021E   75..10       MOV     ?V0,#0x10
+   \   000221   78..         MOV     R0,#?V0
+   \   000223   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   000226   75..00       MOV     ?V0,#0x0
+   \   000229   78..         MOV     R0,#?V0
+   \   00022B   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   00022E   75....       MOV     ?V0,#??pData & 0xff
+   \   000231   75....       MOV     ?V1,#(??pData >> 8) & 0xff
+   \   000234   78..         MOV     R0,#?V0
+   \   000236   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   000239   7902         MOV     R1,#0x2
+   \   00023B   7C02         MOV     R4,#0x2
+   \   00023D   7D00         MOV     R5,#0x0
+   \   00023F   7AFE         MOV     R2,#-0x2
+   \   000241   7BFF         MOV     R3,#-0x1
+   \   000243   12....       LCALL   `??zb_SendDataRequest::?relay`; Banked call to: zb_SendDataRequest
+   \   000246   7405         MOV     A,#0x5
+   \   000248   12....       LCALL   ?DEALLOC_XSTACK8
     182              //0xFFFE Gui toi thiet bi dang Bind
-    183              HalUARTWrite(HAL_UART_PORT_0,"REPORT_ID\n", (byte)osal_strlen("REPORT_ID\n")); 
-   \   00029F                ; Setup parameters for call to function osal_strlen
-   \   00029F   7A..         MOV     R2,#`?<Constant "REPORT_ID\\n">` & 0xff
-   \   0002A1   7B..         MOV     R3,#(`?<Constant "REPORT_ID\\n">` >> 8) & 0xff
-   \   0002A3   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   0002A6   8A..         MOV     ?V0,R2
-   \   0002A8                ; Setup parameters for call to function HalUARTWrite
-   \   0002A8   AC..         MOV     R4,?V0
-   \   0002AA   7D00         MOV     R5,#0x0
-   \   0002AC   7A..         MOV     R2,#`?<Constant "REPORT_ID\\n">` & 0xff
-   \   0002AE   7B..         MOV     R3,#(`?<Constant "REPORT_ID\\n">` >> 8) & 0xff
-   \   0002B0   7900         MOV     R1,#0x0
-   \   0002B2   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+    183              //HalUARTWrite(HAL_UART_PORT_0,"REPORT_ID\n", (byte)osal_strlen("REPORT_ID\n")); 
     184              osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
-   \   0002B5                ; Setup parameters for call to function osal_start_timerEx
-   \   0002B5   12....       LCALL   ?Subroutine1 & 0xFFFF
+   \   00024B                ; Setup parameters for call to function osal_start_timerEx
+   \   00024B   12....       LCALL   ?Subroutine1 & 0xFFFF
     185            }
-   \                     ??CrossCallReturnLabel_0:
-   \   0002B8   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
+   \                     ??CrossCallReturnLabel_8:
+   \   00024E   7A10         MOV     R2,#0x10
+   \   000250   7B00         MOV     R3,#0x0
+   \   000252   90....       MOV     DPTR,#sapi_TaskID
+   \   000255   E0           MOVX    A,@DPTR
+   \   000256   F9           MOV     R1,A
+   \   000257   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
     186          
     187          }
    \                     ??zb_HandleOsalEvent_8:
-   \   0002BB   741F         MOV     A,#0x1f
-   \   0002BD   12....       LCALL   ?DEALLOC_XSTACK8
-   \   0002C0   7F08         MOV     R7,#0x8
-   \   0002C2   02....       LJMP    ?BANKED_LEAVE_XDATA
-   \   0002C5                REQUIRE _A_TCON
-   \   0002C5                REQUIRE ADCCON3
-   \   0002C5                REQUIRE ADCL
-   \   0002C5                REQUIRE ADCH
+   \   00025A   741F         MOV     A,#0x1f
+   \   00025C   12....       LCALL   ?DEALLOC_XSTACK8
+   \   00025F   7F08         MOV     R7,#0x8
+   \   000261   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000264                REQUIRE _A_TCON
+   \   000264                REQUIRE ADCCON3
+   \   000264                REQUIRE ADCL
+   \   000264                REQUIRE ADCH
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine3:
+   \                     ?Subroutine2:
    \   000000   F0           MOVX    @DPTR,A
    \   000001                ; Setup parameters for call to function zb_SendDataRequest
    \   000001                ; Setup parameters for call to function zb_SendDataRequest
@@ -758,6 +709,12 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000006   22           RET
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine1:
+   \   000000   90....       MOV     DPTR,#myIdReportPeriod
+   \   000003                REQUIRE ??Subroutine4_0
+   \   000003                ; // Fall through to label ??Subroutine4_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ??Subroutine4_0:
    \   000000   E0           MOVX    A,@DPTR
    \   000001   FC           MOV     R4,A
@@ -765,21 +722,6 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000003   E0           MOVX    A,@DPTR
    \   000004   FD           MOV     R5,A
    \   000005   22           RET
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine1:
-   \   000000   90....       MOV     DPTR,#myIdReportPeriod
-   \   000003   E0           MOVX    A,@DPTR
-   \   000004   FC           MOV     R4,A
-   \   000005   A3           INC     DPTR
-   \   000006   E0           MOVX    A,@DPTR
-   \   000007   FD           MOV     R5,A
-   \   000008   7A10         MOV     R2,#0x10
-   \   00000A   7B00         MOV     R3,#0x0
-   \   00000C   90....       MOV     DPTR,#sapi_TaskID
-   \   00000F   E0           MOVX    A,@DPTR
-   \   000010   F9           MOV     R1,A
-   \   000011   22           RET
 
    \                                 In  segment XDATA_Z, align 1, keep-with-next
    \                     ??pData:
@@ -832,7 +774,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000005                ; Auto size: 0
    \   000005   E9           MOV     A,R1
     220            if ( status == ZB_SUCCESS )
-   \   000006   700D         JNZ     ??zb_StartConfirm_0
+   \   000006   7010         JNZ     ??zb_StartConfirm_0
     221            {
     222              myAppState = APP_START;
    \   000008   90....       MOV     DPTR,#myAppState
@@ -842,37 +784,42 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     224              // Set event to bind to a collector
     225              osal_start_timerEx( sapi_TaskID, MY_FIND_COLLECTOR_EVT, myBindRetryDelay );
    \   00000E                ; Setup parameters for call to function osal_start_timerEx
-   \   00000E   12....       LCALL   ?Subroutine2 & 0xFFFF
+   \   00000E   90....       MOV     DPTR,#myBindRetryDelay
+   \   000011   12....       LCALL   ??Subroutine4_0 & 0xFFFF
     226            }
-   \                     ??CrossCallReturnLabel_8:
-   \   000011   7A08         MOV     R2,#0x8
-   \   000013   8008         SJMP    ??zb_StartConfirm_1
+   \                     ??CrossCallReturnLabel_5:
+   \   000014   7A08         MOV     R2,#0x8
+   \   000016   8008         SJMP    ??zb_StartConfirm_1
     227            else
     228            {
     229              // Try joining again later with a delay
     230              osal_start_timerEx( sapi_TaskID, MY_START_EVT, myStartRetryDelay );
    \                     ??zb_StartConfirm_0:
-   \   000015                ; Setup parameters for call to function osal_start_timerEx
-   \   000015   90....       MOV     DPTR,#myStartRetryDelay
-   \   000018   12....       LCALL   ??Subroutine4_0 & 0xFFFF
+   \   000018                ; Setup parameters for call to function osal_start_timerEx
+   \   000018   90....       MOV     DPTR,#myStartRetryDelay
+   \   00001B   12....       LCALL   ??Subroutine4_0 & 0xFFFF
     231            }
-   \                     ??CrossCallReturnLabel_7:
-   \   00001B   7A01         MOV     R2,#0x1
+   \                     ??CrossCallReturnLabel_6:
+   \   00001E   7A01         MOV     R2,#0x1
    \                     ??zb_StartConfirm_1:
-   \   00001D   7B00         MOV     R3,#0x0
-   \   00001F   90....       MOV     DPTR,#sapi_TaskID
-   \   000022   E0           MOVX    A,@DPTR
-   \   000023   F9           MOV     R1,A
-   \   000024   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
+   \   000020                REQUIRE ?Subroutine0
+   \   000020                ; // Fall through to label ?Subroutine0
     232          }
-   \   000027   7F01         MOV     R7,#0x1
-   \   000029   02....       LJMP    ?BANKED_LEAVE_XDATA
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine2:
-   \   000000   90....       MOV     DPTR,#myBindRetryDelay
-   \   000003                REQUIRE ??Subroutine4_0
-   \   000003                ; // Fall through to label ??Subroutine4_0
+   \                     ?Subroutine0:
+   \   000000   7B00         MOV     R3,#0x0
+   \   000002   90....       MOV     DPTR,#sapi_TaskID
+   \   000005   E0           MOVX    A,@DPTR
+   \   000006   F9           MOV     R1,A
+   \   000007   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
+   \   00000A                REQUIRE ??Subroutine3_0
+   \   00000A                ; // Fall through to label ??Subroutine3_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine3_0:
+   \   000000   7F01         MOV     R7,#0x1
+   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
     233          /******************************************************************************
     234           * @fn          zb_SendDataConfirm
     235           *
@@ -889,20 +836,17 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     244          void zb_SendDataConfirm( uint8 handle, uint8 status )
    \                     zb_SendDataConfirm:
     245          {
-   \   000000                REQUIRE ?V0
-   \   000000                REQUIRE ?V2
-   \   000000                REQUIRE ?V3
-   \   000000   74F4         MOV     A,#-0xc
+   \   000000   74F7         MOV     A,#-0x9
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 12
+   \   000005                ; Saved register size: 9
    \   000005                ; Auto size: 0
+   \   000005   EA           MOV     A,R2
     246            (void)handle; 
     247            
     248            //HalUARTWrite(HAL_UART_PORT_0,"SendDataConfirm ", (byte)osal_strlen("SendDataConfirm ")); 
     249          
     250            if ( status != ZSuccess )
-   \   000005   EA           MOV     A,R2
-   \   000006   6045         JZ      ??zb_SendDataConfirm_0
+   \   000006   602F         JZ      ??zb_SendDataConfirm_0
     251            {    
     252              //HalUARTWrite(HAL_UART_PORT_0,"Fail\n", (byte)osal_strlen("Fail\n"));
     253              // Remove bindings to the existing collector
@@ -927,30 +871,18 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000022   E0           MOVX    A,@DPTR
    \   000023   F9           MOV     R1,A
    \   000024   12....       LCALL   `??osal_stop_timerEx::?relay`; Banked call to: osal_stop_timerEx
-   \   000027                ; Setup parameters for call to function osal_strlen
-   \   000027   7A..         MOV     R2,#`?<Constant "StopReporting\\n">` & 0xff
-   \   000029   7B..         MOV     R3,#(`?<Constant "StopReporting\\n">` >> 8) & 0xff
-   \   00002B   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   00002E   8A..         MOV     ?V2,R2
-   \   000030                ; Setup parameters for call to function HalUARTWrite
-   \   000030   AC..         MOV     R4,?V2
-   \   000032   7D00         MOV     R5,#0x0
-   \   000034   7A..         MOV     R2,#`?<Constant "StopReporting\\n">` & 0xff
-   \   000036   7B..         MOV     R3,#(`?<Constant "StopReporting\\n">` >> 8) & 0xff
-   \   000038   7900         MOV     R1,#0x0
-   \   00003A   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
     258          
     259              // Start process of finding new collector with minimal delay
     260              osal_start_timerEx( sapi_TaskID, MY_FIND_COLLECTOR_EVT, 1 );
-   \   00003D                ; Setup parameters for call to function osal_start_timerEx
-   \   00003D   7C01         MOV     R4,#0x1
-   \   00003F   7D00         MOV     R5,#0x0
-   \   000041   7A08         MOV     R2,#0x8
-   \   000043   7B00         MOV     R3,#0x0
-   \   000045   90....       MOV     DPTR,#sapi_TaskID
-   \   000048   E0           MOVX    A,@DPTR
-   \   000049   F9           MOV     R1,A
-   \   00004A   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
+   \   000027                ; Setup parameters for call to function osal_start_timerEx
+   \   000027   7C01         MOV     R4,#0x1
+   \   000029   7D00         MOV     R5,#0x0
+   \   00002B   7A08         MOV     R2,#0x8
+   \   00002D   7B00         MOV     R3,#0x0
+   \   00002F   90....       MOV     DPTR,#sapi_TaskID
+   \   000032   E0           MOVX    A,@DPTR
+   \   000033   F9           MOV     R1,A
+   \   000034   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
     261            }
     262            else
     263            {
@@ -958,13 +890,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     265            }
     266          }
    \                     ??zb_SendDataConfirm_0:
-   \   00004D                REQUIRE ?Subroutine0
-   \   00004D                ; // Fall through to label ?Subroutine0
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine0:
-   \   000000   7F04         MOV     R7,#0x4
-   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000037   80..         SJMP    ??Subroutine3_0
     267          /******************************************************************************
     268           * @fn          zb_BindConfirm
     269           *
@@ -981,80 +907,48 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     278          void zb_BindConfirm( uint16 commandId, uint8 status )
    \                     zb_BindConfirm:
     279          {
-   \   000000                REQUIRE ?V0
-   \   000000                REQUIRE ?V2
-   \   000000                REQUIRE ?V3
-   \   000000   74F4         MOV     A,#-0xc
+   \   000000   74F7         MOV     A,#-0x9
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 12
+   \   000005                ; Saved register size: 9
    \   000005                ; Auto size: 0
-   \   000005   89..         MOV     ?V0,R1
+   \   000005   E9           MOV     A,R1
     280            (void)commandId;
     281            
-    282            HalUARTWrite(HAL_UART_PORT_0,"BindConfirm\n", (byte)osal_strlen("BindConfirm\n")); 
-   \   000007                ; Setup parameters for call to function osal_strlen
-   \   000007   7A..         MOV     R2,#`?<Constant "BindConfirm\\n">` & 0xff
-   \   000009   7B..         MOV     R3,#(`?<Constant "BindConfirm\\n">` >> 8) & 0xff
-   \   00000B   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   00000E   8A..         MOV     ?V2,R2
-   \   000010                ; Setup parameters for call to function HalUARTWrite
-   \   000010   AC..         MOV     R4,?V2
-   \   000012   7D00         MOV     R5,#0x0
-   \   000014   7A..         MOV     R2,#`?<Constant "BindConfirm\\n">` & 0xff
-   \   000016   7B..         MOV     R3,#(`?<Constant "BindConfirm\\n">` >> 8) & 0xff
-   \   000018   7900         MOV     R1,#0x0
-   \   00001A   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+    282            //HalUARTWrite(HAL_UART_PORT_0,"BindConfirm\n", (byte)osal_strlen("BindConfirm\n")); 
     283          
     284            if ( ( status == ZB_SUCCESS ) && ( myAppState == APP_START ) )
-   \   00001D   E5..         MOV     A,?V0
-   \   00001F   7029         JNZ     ??zb_BindConfirm_0
-   \   000021   90....       MOV     DPTR,#myAppState
-   \   000024   E0           MOVX    A,@DPTR
-   \   000025   6401         XRL     A,#0x1
-   \   000027   7021         JNZ     ??zb_BindConfirm_0
+   \   000006   7012         JNZ     ??zb_BindConfirm_0
+   \   000008   90....       MOV     DPTR,#myAppState
+   \   00000B   E0           MOVX    A,@DPTR
+   \   00000C   6401         XRL     A,#0x1
+   \   00000E   700A         JNZ     ??zb_BindConfirm_0
     285            {
     286              myAppState = APP_BOUND;
-   \   000029   7402         MOV     A,#0x2
-   \   00002B   F0           MOVX    @DPTR,A
+   \   000010   7402         MOV     A,#0x2
+   \   000012   F0           MOVX    @DPTR,A
     287          
     288              //Start reporting sensor values
     289              myApp_StartReporting();
-   \   00002C                ; Setup parameters for call to function osal_start_timerEx
-   \   00002C   12....       LCALL   ?Subroutine1 & 0xFFFF
-   \                     ??CrossCallReturnLabel_1:
-   \   00002F   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
-   \   000032                ; Setup parameters for call to function osal_strlen
-   \   000032   7A..         MOV     R2,#`?<Constant "StartReporting\\n">` & 0xff
-   \   000034   7B..         MOV     R3,#(`?<Constant "StartReporting\\n">` >> 8) & 0xff
-   \   000036   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   000039   8A..         MOV     ?V2,R2
-   \   00003B                ; Setup parameters for call to function HalUARTWrite
-   \   00003B   AC..         MOV     R4,?V2
-   \   00003D   7D00         MOV     R5,#0x0
-   \   00003F   7A..         MOV     R2,#`?<Constant "StartReporting\\n">` & 0xff
-   \   000041   7B..         MOV     R3,#(`?<Constant "StartReporting\\n">` >> 8) & 0xff
-   \   000043   7900         MOV     R1,#0x0
-   \   000045   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+   \   000013                ; Setup parameters for call to function osal_start_timerEx
+   \   000013   12....       LCALL   ?Subroutine1 & 0xFFFF
     290            }
-   \   000048   800F         SJMP    ??zb_BindConfirm_1
+   \                     ??CrossCallReturnLabel_9:
+   \   000016   7A10         MOV     R2,#0x10
+   \   000018   8008         SJMP    ??zb_BindConfirm_1
     291            else
     292            {
     293              // Continue to discover a collector
     294              osal_start_timerEx( sapi_TaskID, MY_FIND_COLLECTOR_EVT, myBindRetryDelay );
    \                     ??zb_BindConfirm_0:
-   \   00004A                ; Setup parameters for call to function osal_start_timerEx
-   \   00004A   12....       LCALL   ?Subroutine2 & 0xFFFF
+   \   00001A                ; Setup parameters for call to function osal_start_timerEx
+   \   00001A   90....       MOV     DPTR,#myBindRetryDelay
+   \   00001D   12....       LCALL   ??Subroutine4_0 & 0xFFFF
     295            }
-   \                     ??CrossCallReturnLabel_9:
-   \   00004D   7A08         MOV     R2,#0x8
-   \   00004F   7B00         MOV     R3,#0x0
-   \   000051   90....       MOV     DPTR,#sapi_TaskID
-   \   000054   E0           MOVX    A,@DPTR
-   \   000055   F9           MOV     R1,A
-   \   000056   12....       LCALL   `??osal_start_timerEx::?relay`; Banked call to: osal_start_timerEx
-    296          }
+   \                     ??CrossCallReturnLabel_7:
+   \   000020   7A08         MOV     R2,#0x8
    \                     ??zb_BindConfirm_1:
-   \   000059   80..         SJMP    ?Subroutine0
+   \   000022   80..         SJMP    ?Subroutine0
+    296          }
     297          /******************************************************************************
     298           * @fn          zb_AllowBindConfirm
     299           *
@@ -1121,29 +1015,12 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     346          void zb_ReceiveDataIndication( uint16 source, uint16 command, uint16 len, uint8 *pData,int8 r_power  )
    \                     zb_ReceiveDataIndication:
     347          {
-   \   000000                REQUIRE ?V0
-   \   000000                REQUIRE ?V1
-   \   000000   74F6         MOV     A,#-0xa
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 10
-   \   000005                ; Auto size: 0
-    348            HalUARTWrite(HAL_UART_PORT_0,"ReceiveDataIndication\n", (byte)osal_strlen("ReceiveDataIndication\n")); 
-   \   000005                ; Setup parameters for call to function osal_strlen
-   \   000005   7A..         MOV     R2,#`?<Constant "ReceiveDataIndication\\n">` & 0xff
-   \   000007   7B..         MOV     R3,#(`?<Constant "ReceiveDataIndication\\n">` >> 8) & 0xff
-   \   000009   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   00000C   8A..         MOV     ?V0,R2
-   \   00000E                ; Setup parameters for call to function HalUARTWrite
-   \   00000E   AC..         MOV     R4,?V0
-   \   000010   7D00         MOV     R5,#0x0
-   \   000012   7A..         MOV     R2,#`?<Constant "ReceiveDataIndication\\n">` & 0xff
-   \   000014   7B..         MOV     R3,#(`?<Constant "ReceiveDataIndication\\n">` >> 8) & 0xff
-   \   000016   7900         MOV     R1,#0x0
-   \   000018   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+    348            //HalUARTWrite(HAL_UART_PORT_0,"ReceiveDataIndication\n", (byte)osal_strlen("ReceiveDataIndication\n")); 
     349            
     350          }
-   \   00001B   7F02         MOV     R7,#0x2
-   \   00001D   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000000   02....       LJMP    ?BRET
     351          /******************************************************************************
     352           * @fn          my_StartReporting
     353           *
@@ -1160,7 +1037,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     364            osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
     365            //HalLedSet( HAL_LED_1, HAL_LED_MODE_ON );
     366            
-    367            HalUARTWrite(HAL_UART_PORT_0,"StartReporting\n", (byte)osal_strlen("StartReporting\n")); 
+    367            //HalUARTWrite(HAL_UART_PORT_0,"StartReporting\n", (byte)osal_strlen("StartReporting\n")); 
     368          
     369          }
     370          /******************************************************************************
@@ -1179,7 +1056,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     383            osal_stop_timerEx( sapi_TaskID, ID_REPORT_EVT );
     384            //HalLedSet( HAL_LED_1, HAL_LED_MODE_OFF );
     385            
-    386            HalUARTWrite(HAL_UART_PORT_0,"StopReporting\n", (byte)osal_strlen("StopReporting\n")); 
+    386            //HalUARTWrite(HAL_UART_PORT_0,"StopReporting\n", (byte)osal_strlen("StopReporting\n")); 
     387          }
     388          /******************************************************************************
     389           * @fn          myApp_ReadBattery
@@ -1425,7 +1302,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
     614            if ((event&HAL_UART_RX_TIMEOUT) || (event&HAL_UART_RX_ABOUT_FULL)){    
    \   00000E   7406         MOV     A,#0x6
    \   000010   55..         ANL     A,?V1
-   \   000012   7034         JNZ     ??Uart0_Cb_0
+   \   000012   7036         JNZ     ??Uart0_Cb_0
     615              while (Hal_UART_RxBufLen(port))
     616              {
     617                HalUARTRead ( port, &ch, 1);
@@ -1451,68 +1328,69 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \                     ??Uart0_Cb_1:
    \   000014   7402         MOV     A,#0x2
    \   000016   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000019   02....       LJMP    ?Subroutine0 & 0xFFFF
+   \   000019   7F04         MOV     R7,#0x4
+   \   00001B   02....       LJMP    ?BANKED_LEAVE_XDATA
    \                     ??Uart0_Cb_2:
-   \   00001C                ; Setup parameters for call to function osal_strlen
-   \   00001C   7A..         MOV     R2,#`?<Constant "\\nEndDevice:">` & 0xff
-   \   00001E   7B..         MOV     R3,#(`?<Constant "\\nEndDevice:">` >> 8) & 0xff
-   \   000020   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   000023   8A..         MOV     ?V2,R2
-   \   000025                ; Setup parameters for call to function HalUARTWrite
-   \   000025   AC..         MOV     R4,?V2
-   \   000027   7D00         MOV     R5,#0x0
-   \   000029   7A..         MOV     R2,#`?<Constant "\\nEndDevice:">` & 0xff
-   \   00002B   7B..         MOV     R3,#(`?<Constant "\\nEndDevice:">` >> 8) & 0xff
-   \   00002D   7900         MOV     R1,#0x0
-   \   00002F   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
-   \   000032                ; Setup parameters for call to function osal_strlen
-   \   000032   7A..         MOV     R2,#`?<Constant "1\\n">` & 0xff
-   \   000034   7B..         MOV     R3,#(`?<Constant "1\\n">` >> 8) & 0xff
-   \   000036   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
-   \   000039   8A..         MOV     ?V2,R2
-   \   00003B                ; Setup parameters for call to function HalUARTWrite
-   \   00003B   AC..         MOV     R4,?V2
-   \   00003D   7D00         MOV     R5,#0x0
-   \   00003F   7A..         MOV     R2,#`?<Constant "1\\n">` & 0xff
-   \   000041   7B..         MOV     R3,#(`?<Constant "1\\n">` >> 8) & 0xff
-   \   000043   7900         MOV     R1,#0x0
-   \   000045   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+   \   00001E                ; Setup parameters for call to function osal_strlen
+   \   00001E   7A..         MOV     R2,#`?<Constant "\\nEndDevice:">` & 0xff
+   \   000020   7B..         MOV     R3,#(`?<Constant "\\nEndDevice:">` >> 8) & 0xff
+   \   000022   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
+   \   000025   8A..         MOV     ?V2,R2
+   \   000027                ; Setup parameters for call to function HalUARTWrite
+   \   000027   AC..         MOV     R4,?V2
+   \   000029   7D00         MOV     R5,#0x0
+   \   00002B   7A..         MOV     R2,#`?<Constant "\\nEndDevice:">` & 0xff
+   \   00002D   7B..         MOV     R3,#(`?<Constant "\\nEndDevice:">` >> 8) & 0xff
+   \   00002F   7900         MOV     R1,#0x0
+   \   000031   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
+   \   000034                ; Setup parameters for call to function osal_strlen
+   \   000034   7A..         MOV     R2,#`?<Constant "2\\n">` & 0xff
+   \   000036   7B..         MOV     R3,#(`?<Constant "2\\n">` >> 8) & 0xff
+   \   000038   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
+   \   00003B   8A..         MOV     ?V2,R2
+   \   00003D                ; Setup parameters for call to function HalUARTWrite
+   \   00003D   AC..         MOV     R4,?V2
+   \   00003F   7D00         MOV     R5,#0x0
+   \   000041   7A..         MOV     R2,#`?<Constant "2\\n">` & 0xff
+   \   000043   7B..         MOV     R3,#(`?<Constant "2\\n">` >> 8) & 0xff
+   \   000045   7900         MOV     R1,#0x0
+   \   000047   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
    \                     ??Uart0_Cb_0:
-   \   000048                ; Setup parameters for call to function Hal_UART_RxBufLen
-   \   000048   A9..         MOV     R1,?V0
-   \   00004A   12....       LCALL   `??Hal_UART_RxBufLen::?relay`; Banked call to: Hal_UART_RxBufLen
-   \   00004D   8B..         MOV     ?V3,R3
-   \   00004F   EA           MOV     A,R2
-   \   000050   45..         ORL     A,?V3
-   \   000052   60C0         JZ      ??Uart0_Cb_1
-   \   000054                ; Setup parameters for call to function HalUARTRead
-   \   000054   7C01         MOV     R4,#0x1
-   \   000056   7D00         MOV     R5,#0x0
-   \   000058   AA..         MOV     R2,?XSP + 0
-   \   00005A   AB..         MOV     R3,?XSP + 1
-   \   00005C   A9..         MOV     R1,?V0
-   \   00005E   12....       LCALL   `??HalUARTRead::?relay`; Banked call to: HalUARTRead
-   \   000061   85..82       MOV     DPL,?XSP + 0
-   \   000064   85..83       MOV     DPH,?XSP + 1
-   \   000067   E0           MOVX    A,@DPTR
-   \   000068   643F         XRL     A,#0x3f
-   \   00006A   60B0         JZ      ??Uart0_Cb_2
-   \   00006C   E0           MOVX    A,@DPTR
-   \   00006D   6472         XRL     A,#0x72
-   \   00006F   70D7         JNZ     ??Uart0_Cb_0
-   \   000071   7401         MOV     A,#0x1
-   \   000073   12....       LCALL   ?XSTACK_DISP0_8
-   \   000076   7403         MOV     A,#0x3
-   \   000078   F0           MOVX    @DPTR,A
-   \   000079                ; Setup parameters for call to function zb_WriteConfiguration
-   \   000079   7401         MOV     A,#0x1
-   \   00007B   12....       LCALL   ?XSTACK_DISP102_8
-   \   00007E   7A01         MOV     R2,#0x1
-   \   000080   7903         MOV     R1,#0x3
-   \   000082   12....       LCALL   `??zb_WriteConfiguration::?relay`; Banked call to: zb_WriteConfiguration
-   \   000085                ; Setup parameters for call to function zb_SystemReset
-   \   000085   12....       LCALL   `??zb_SystemReset::?relay`; Banked call to: zb_SystemReset
-   \   000088   80BE         SJMP    ??Uart0_Cb_0
+   \   00004A                ; Setup parameters for call to function Hal_UART_RxBufLen
+   \   00004A   A9..         MOV     R1,?V0
+   \   00004C   12....       LCALL   `??Hal_UART_RxBufLen::?relay`; Banked call to: Hal_UART_RxBufLen
+   \   00004F   8B..         MOV     ?V3,R3
+   \   000051   EA           MOV     A,R2
+   \   000052   45..         ORL     A,?V3
+   \   000054   60BE         JZ      ??Uart0_Cb_1
+   \   000056                ; Setup parameters for call to function HalUARTRead
+   \   000056   7C01         MOV     R4,#0x1
+   \   000058   7D00         MOV     R5,#0x0
+   \   00005A   AA..         MOV     R2,?XSP + 0
+   \   00005C   AB..         MOV     R3,?XSP + 1
+   \   00005E   A9..         MOV     R1,?V0
+   \   000060   12....       LCALL   `??HalUARTRead::?relay`; Banked call to: HalUARTRead
+   \   000063   85..82       MOV     DPL,?XSP + 0
+   \   000066   85..83       MOV     DPH,?XSP + 1
+   \   000069   E0           MOVX    A,@DPTR
+   \   00006A   643F         XRL     A,#0x3f
+   \   00006C   60B0         JZ      ??Uart0_Cb_2
+   \   00006E   E0           MOVX    A,@DPTR
+   \   00006F   6472         XRL     A,#0x72
+   \   000071   70D7         JNZ     ??Uart0_Cb_0
+   \   000073   7401         MOV     A,#0x1
+   \   000075   12....       LCALL   ?XSTACK_DISP0_8
+   \   000078   7403         MOV     A,#0x3
+   \   00007A   F0           MOVX    @DPTR,A
+   \   00007B                ; Setup parameters for call to function zb_WriteConfiguration
+   \   00007B   7401         MOV     A,#0x1
+   \   00007D   12....       LCALL   ?XSTACK_DISP102_8
+   \   000080   7A01         MOV     R2,#0x1
+   \   000082   7903         MOV     R1,#0x3
+   \   000084   12....       LCALL   `??zb_WriteConfiguration::?relay`; Banked call to: zb_WriteConfiguration
+   \   000087                ; Setup parameters for call to function zb_SystemReset
+   \   000087   12....       LCALL   `??zb_SystemReset::?relay`; Banked call to: zb_SystemReset
+   \   00008A   80BE         SJMP    ??Uart0_Cb_0
 
    \                                 In  segment XDATA_ID, align 1, keep-with-next
    \                     `?<Initializer for myStartRetryDelay>`:
@@ -1580,69 +1458,9 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000003   ......       DC24    Uart0_Cb
 
    \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "\\nZB_ENTRY_EVENT\\n">`:
-   \   000000   0A5A425F     DB "\012ZB_ENTRY_EVENT\012"
-   \            454E5452
-   \            595F4556
-   \            454E540A
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "REPORT_TEMP\\n">`:
-   \   000000   5245504F     DB "REPORT_TEMP\012"
-   \            52545F54
-   \            454D500A
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "REPORT_BATT\\n">`:
-   \   000000   5245504F     DB "REPORT_BATT\012"
-   \            52545F42
-   \            4154540A
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "FIND_COLLECTOR\\n">`:
-   \   000000   46494E44     DB "FIND_COLLECTOR\012"
-   \            5F434F4C
-   \            4C454354
-   \            4F520A00
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "REPORT_ID\\n">`:
-   \   000000   5245504F     DB "REPORT_ID\012"
-   \            52545F49
-   \            440A00  
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "BindConfirm\\n">`:
-   \   000000   42696E64     DB "BindConfirm\012"
-   \            436F6E66
-   \            69726D0A
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "ReceiveDataIndication\\n">`:
-   \   000000   52656365     DB "ReceiveDataIndication\012"
-   \            69766544
-   \            61746149
-   \            6E646963
-   \            6174696F
-   \            6E0A00  
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "StartReporting\\n">`:
-   \   000000   53746172     DB "StartReporting\012"
-   \            74526570
-   \            6F727469
-   \            6E670A00
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "StopReporting\\n">`:
-   \   000000   53746F70     DB "StopReporting\012"
-   \            5265706F
-   \            7274696E
-   \            670A00  
+   \                     `?<Constant "\\nENTRY\\n">`:
+   \   000000   0A454E54     DB "\012ENTRY\012"
+   \            52590A00
 
    \                                 In  segment XDATA_ROM_C, align 1
    \                     `?<Constant "\\nEndDevice:">`:
@@ -1651,8 +1469,8 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \            63653A00
 
    \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "1\\n">`:
-   \   000000   310A00       DB "1\012"
+   \                     `?<Constant "2\\n">`:
+   \   000000   320A00       DB "2\012"
 
    \                                 In  segment XDATA_ROM_C, align 1
    \                     __Constant_42160000:
@@ -1670,10 +1488,8 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
        14   -> zb_SystemReset
        14   -> zb_WriteConfiguration
       0   zb_AllowBindConfirm
-     12   zb_BindConfirm
-       12   -> HalUARTWrite
-       12   -> osal_start_timerEx
-       12   -> osal_strlen
+      9   zb_BindConfirm
+        9   -> osal_start_timerEx
       0   zb_FindDeviceConfirm
       0   zb_HandleKeys
      52   zb_HandleOsalEvent
@@ -1686,15 +1502,11 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
        52   -> zb_SendDataRequest
        47   -> zb_StartRequest
        47   -> zb_WriteConfiguration
-     14   zb_ReceiveDataIndication
-       10   -> HalUARTWrite
-       10   -> osal_strlen
-     12   zb_SendDataConfirm
-       12   -> HalUARTWrite
-       12   -> osal_start_timerEx
-       12   -> osal_stop_timerEx
-       12   -> osal_strlen
-       12   -> zb_BindDevice
+      4   zb_ReceiveDataIndication
+      9   zb_SendDataConfirm
+        9   -> osal_start_timerEx
+        9   -> osal_stop_timerEx
+        9   -> zb_BindDevice
       9   zb_StartConfirm
         9   -> osal_start_timerEx
 
@@ -1703,31 +1515,23 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
 
    Bytes  Function/Label
    -----  --------------
-       3  ?<Constant "1\n">
-      13  ?<Constant "BindConfirm\n">
-      16  ?<Constant "FIND_COLLECTOR\n">
-      13  ?<Constant "REPORT_BATT\n">
-      11  ?<Constant "REPORT_ID\n">
-      13  ?<Constant "REPORT_TEMP\n">
-      23  ?<Constant "ReceiveDataIndication\n">
-      16  ?<Constant "StartReporting\n">
-      15  ?<Constant "StopReporting\n">
+       3  ?<Constant "2\n">
+       8  ?<Constant "\nENTRY\n">
       12  ?<Constant "\nEndDevice:">
-      17  ?<Constant "\nZB_ENTRY_EVENT\n">
        2  ?<Initializer for myBatteryCheckPeriod>
        2  ?<Initializer for myBindRetryDelay>
        2  ?<Initializer for myIdReportPeriod>
        2  ?<Initializer for myStartRetryDelay>
        2  ?<Initializer for myTempReportPeriod>
+       5  ??Subroutine3_0
        6  ??Subroutine4_0
-       5  ?Subroutine0
-      18  ?Subroutine1
-       3  ?Subroutine2
-       7  ?Subroutine3
+      10  ?Subroutine0
+       3  ?Subroutine1
+       7  ?Subroutine2
        1  ADCCON3
        1  ADCH
        1  ADCL
-     138  Uart0_Cb
+     140  Uart0_Cb
        6  Uart0_Cb::?relay
        1  _A_TCON
        4  __Constant_42160000
@@ -1740,38 +1544,38 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
        2  pData
        3  zb_AllowBindConfirm
        6  zb_AllowBindConfirm::?relay
-      91  zb_BindConfirm
+      36  zb_BindConfirm
        6  zb_BindConfirm::?relay
        3  zb_FindDeviceConfirm
        6  zb_FindDeviceConfirm::?relay
        3  zb_HandleKeys
        6  zb_HandleKeys::?relay
-     709  zb_HandleOsalEvent
+     612  zb_HandleOsalEvent
        6  zb_HandleOsalEvent::?relay
        2  zb_InCmdList
        2  zb_OutCmdList
-      32  zb_ReceiveDataIndication
+       3  zb_ReceiveDataIndication
        6  zb_ReceiveDataIndication::?relay
-      77  zb_SendDataConfirm
+      57  zb_SendDataConfirm
        6  zb_SendDataConfirm::?relay
       12  zb_SimpleDesc
-      44  zb_StartConfirm
+      32  zb_StartConfirm
        6  zb_StartConfirm::?relay
 
  
- 1 139 bytes in segment BANKED_CODE
-    54 bytes in segment BANK_RELAYS
-     4 bytes in segment SFR_AN
-    10 bytes in segment XDATA_I
-    10 bytes in segment XDATA_ID
-   172 bytes in segment XDATA_ROM_C
-     3 bytes in segment XDATA_Z
+ 920 bytes in segment BANKED_CODE
+  54 bytes in segment BANK_RELAYS
+   4 bytes in segment SFR_AN
+  10 bytes in segment XDATA_I
+  10 bytes in segment XDATA_ID
+  43 bytes in segment XDATA_ROM_C
+   3 bytes in segment XDATA_Z
  
-    64 bytes of CODE     memory
-   168 bytes of CONST    memory (+ 4 bytes shared)
-     0 bytes of DATA     memory (+ 4 bytes shared)
- 1 139 bytes of HUGECODE memory
-    13 bytes of XDATA    memory
+  64 bytes of CODE     memory
+  39 bytes of CONST    memory (+ 4 bytes shared)
+   0 bytes of DATA     memory (+ 4 bytes shared)
+ 920 bytes of HUGECODE memory
+  13 bytes of XDATA    memory
 
 Errors: none
 Warnings: none

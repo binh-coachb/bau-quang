@@ -16,7 +16,7 @@
 /*********************************************************************
  * CONSTANTS
  */
-#define MY_ID  (uint8)1
+#define MY_ID  (uint8)2
 // Application States
 #define APP_INIT                           0    // Initial state
 #define APP_START                          1    // Sensor has joined network
@@ -135,7 +135,7 @@ void zb_HandleOsalEvent( uint16 event )
     uConfig.intEnable = TRUE;//enable interrupts
     uConfig.callBackFunc = &Uart0_Cb;
     HalUARTOpen(HAL_UART_PORT_0,&uConfig);
-    HalUARTWrite(HAL_UART_PORT_0,"\nZB_ENTRY_EVENT\n", (byte)osal_strlen("\nZB_ENTRY_EVENT\n")); 
+    HalUARTWrite(HAL_UART_PORT_0,"\nENTRY\n", (byte)osal_strlen("\nENTRY\n")); 
     
     startOptions = ZCD_STARTOPT_CLEAR_STATE | ZCD_STARTOPT_CLEAR_CONFIG;    
     zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
@@ -155,7 +155,7 @@ void zb_HandleOsalEvent( uint16 event )
     pData[1] =  myApp_ReadTemperature();
     zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
     //0xFFFE Gui toi thiet bi dang Bind
-    HalUARTWrite(HAL_UART_PORT_0,"REPORT_TEMP\n", (byte)osal_strlen("REPORT_TEMP\n")); 
+    //HalUARTWrite(HAL_UART_PORT_0,"REPORT_TEMP\n", (byte)osal_strlen("REPORT_TEMP\n")); 
     osal_start_timerEx( sapi_TaskID, MY_REPORT_TEMP_EVT, myTempReportPeriod );
   }
 
@@ -164,13 +164,13 @@ void zb_HandleOsalEvent( uint16 event )
     pData[0] = BATTERY_REPORT;
     pData[1] =  myApp_ReadBattery();
     zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
-    HalUARTWrite(HAL_UART_PORT_0,"REPORT_BATT\n", (byte)osal_strlen("REPORT_BATT\n")); 
+    //HalUARTWrite(HAL_UART_PORT_0,"REPORT_BATT\n", (byte)osal_strlen("REPORT_BATT\n")); 
     osal_start_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT, myBatteryCheckPeriod );
   }
 
   if ( event & MY_FIND_COLLECTOR_EVT )
   {
-    HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
+    //HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
     zb_BindDevice( TRUE, SENSOR_REPORT_CMD_ID, (uint8 *)NULL );
   }
   
@@ -180,7 +180,7 @@ void zb_HandleOsalEvent( uint16 event )
     pData[1] =  MY_ID;
     zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
     //0xFFFE Gui toi thiet bi dang Bind
-    HalUARTWrite(HAL_UART_PORT_0,"REPORT_ID\n", (byte)osal_strlen("REPORT_ID\n")); 
+    //HalUARTWrite(HAL_UART_PORT_0,"REPORT_ID\n", (byte)osal_strlen("REPORT_ID\n")); 
     osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
   }
 
@@ -279,7 +279,7 @@ void zb_BindConfirm( uint16 commandId, uint8 status )
 {
   (void)commandId;
   
-  HalUARTWrite(HAL_UART_PORT_0,"BindConfirm\n", (byte)osal_strlen("BindConfirm\n")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"BindConfirm\n", (byte)osal_strlen("BindConfirm\n")); 
 
   if ( ( status == ZB_SUCCESS ) && ( myAppState == APP_START ) )
   {
@@ -345,7 +345,7 @@ void zb_FindDeviceConfirm( uint8 searchType, uint8 *searchKey, uint8 *result )
  */
 void zb_ReceiveDataIndication( uint16 source, uint16 command, uint16 len, uint8 *pData,int8 r_power  )
 {
-  HalUARTWrite(HAL_UART_PORT_0,"ReceiveDataIndication\n", (byte)osal_strlen("ReceiveDataIndication\n")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"ReceiveDataIndication\n", (byte)osal_strlen("ReceiveDataIndication\n")); 
   
 }
 /******************************************************************************
@@ -364,7 +364,7 @@ void myApp_StartReporting( void )
   osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
   //HalLedSet( HAL_LED_1, HAL_LED_MODE_ON );
   
-  HalUARTWrite(HAL_UART_PORT_0,"StartReporting\n", (byte)osal_strlen("StartReporting\n")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"StartReporting\n", (byte)osal_strlen("StartReporting\n")); 
 
 }
 /******************************************************************************
@@ -383,7 +383,7 @@ void myApp_StopReporting( void )
   osal_stop_timerEx( sapi_TaskID, ID_REPORT_EVT );
   //HalLedSet( HAL_LED_1, HAL_LED_MODE_OFF );
   
-  HalUARTWrite(HAL_UART_PORT_0,"StopReporting\n", (byte)osal_strlen("StopReporting\n")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"StopReporting\n", (byte)osal_strlen("StopReporting\n")); 
 }
 /******************************************************************************
  * @fn          myApp_ReadBattery

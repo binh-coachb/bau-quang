@@ -97,7 +97,7 @@ void zb_HandleOsalEvent( uint16 event )
     uConfig.intEnable = TRUE;//enable interrupts
     uConfig.callBackFunc = &Uart0_Cb;
     HalUARTOpen(HAL_UART_PORT_0,&uConfig);
-    HalUARTWrite(HAL_UART_PORT_0,"\nZB_ENTRY_EVENT\n", (byte)osal_strlen("\nZB_ENTRY_EVENT\n"));      
+    HalUARTWrite(HAL_UART_PORT_0,"\nENTRY\n", (byte)osal_strlen("\nENTRY\n"));      
     
     startOptions = ZCD_STARTOPT_CLEAR_STATE | ZCD_STARTOPT_CLEAR_CONFIG;    
     zb_WriteConfiguration( ZCD_NV_STARTUP_OPTION, sizeof(uint8), &startOptions );
@@ -169,7 +169,7 @@ void zb_StartConfirm( uint8 status )
  */
 void zb_SendDataConfirm( uint8 handle, uint8 status )
 {
-  HalUARTWrite(HAL_UART_PORT_0,"SendDataConfirm ", (byte)osal_strlen("SendDataConfirm ")); 
+  //HalUARTWrite(HAL_UART_PORT_0,"SendDataConfirm ", (byte)osal_strlen("SendDataConfirm ")); 
   /*if ( status != ZSuccess )
   { 
     HalUARTWrite(HAL_UART_PORT_0,"Fail\n", (byte)osal_strlen("Fail\n"));
@@ -204,7 +204,7 @@ void zb_BindConfirm( uint16 commandId, uint8 status )
  */
 void zb_AllowBindConfirm( uint16 source )
 {
-  HalUARTWrite(HAL_UART_PORT_0,"AllowBindConfirm\n", (byte)osal_strlen("AllowBindConfirm\n")); 
+  HalUARTWrite(HAL_UART_PORT_0,"Allow\n", (byte)osal_strlen("Allow\n")); 
 }
 /******************************************************************************
  * @fn          zb_FindDeviceConfirm
