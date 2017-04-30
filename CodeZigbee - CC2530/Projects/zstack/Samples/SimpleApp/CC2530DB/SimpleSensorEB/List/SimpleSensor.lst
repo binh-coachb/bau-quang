@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR C/C++ Compiler V9.30.3.3983 for 8051                29/Apr/2017  14:51:56
+# IAR C/C++ Compiler V9.30.3.3983 for 8051                30/Apr/2017  20:52:43
 # Copyright 2004-2016 IAR Systems AB.
 # Standalone license - IAR Embedded Workbench for 8051
 #
@@ -140,7 +140,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
      16          /*********************************************************************
      17           * CONSTANTS
      18           */
-     19          #define MY_ID  (uint8)2
+     19          #define MY_ID  (uint8)1
      20          // Application States
      21          #define APP_INIT                           0    // Initial state
      22          #define APP_START                          1    // Sensor has joined network
@@ -181,7 +181,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
      52          
 
    \                                 In  segment XDATA_I, align 1, keep-with-next
-     53          static uint16 myStartRetryDelay = 5000;      // milliseconds
+     53          static uint16 myStartRetryDelay = 1000;      // milliseconds
    \                     myStartRetryDelay:
    \   000000                DS 2
    \   000002                REQUIRE `?<Initializer for myStartRetryDelay>`
@@ -202,14 +202,14 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000002                REQUIRE __INIT_XDATA_I
 
    \                                 In  segment XDATA_I, align 1, keep-with-next
-     56          static uint16 myBindRetryDelay = 4000;       // milliseconds
+     56          static uint16 myBindRetryDelay = 1000;       // milliseconds
    \                     myBindRetryDelay:
    \   000000                DS 2
    \   000002                REQUIRE `?<Initializer for myBindRetryDelay>`
    \   000002                REQUIRE __INIT_XDATA_I
 
    \                                 In  segment XDATA_I, align 1, keep-with-next
-     57          static uint16 myIdReportPeriod = 4000;     // milliseconds
+     57          static uint16 myIdReportPeriod = 2000;     // milliseconds
    \                     myIdReportPeriod:
    \   000000                DS 2
    \   000002                REQUIRE `?<Initializer for myIdReportPeriod>`
@@ -650,7 +650,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   000214   F0           MOVX    @DPTR,A
     180              pData[1] =  MY_ID;
    \   000215   A3           INC     DPTR
-   \   000216   7402         MOV     A,#0x2
+   \   000216   7401         MOV     A,#0x1
    \   000218   12....       LCALL   ?Subroutine2 & 0xFFFF
     181              zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
    \                     ??CrossCallReturnLabel_2:
@@ -1344,15 +1344,15 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \   00002F   7900         MOV     R1,#0x0
    \   000031   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
    \   000034                ; Setup parameters for call to function osal_strlen
-   \   000034   7A..         MOV     R2,#`?<Constant "2\\n">` & 0xff
-   \   000036   7B..         MOV     R3,#(`?<Constant "2\\n">` >> 8) & 0xff
+   \   000034   7A..         MOV     R2,#`?<Constant "1\\n">` & 0xff
+   \   000036   7B..         MOV     R3,#(`?<Constant "1\\n">` >> 8) & 0xff
    \   000038   12....       LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
    \   00003B   8A..         MOV     ?V2,R2
    \   00003D                ; Setup parameters for call to function HalUARTWrite
    \   00003D   AC..         MOV     R4,?V2
    \   00003F   7D00         MOV     R5,#0x0
-   \   000041   7A..         MOV     R2,#`?<Constant "2\\n">` & 0xff
-   \   000043   7B..         MOV     R3,#(`?<Constant "2\\n">` >> 8) & 0xff
+   \   000041   7A..         MOV     R2,#`?<Constant "1\\n">` & 0xff
+   \   000043   7B..         MOV     R3,#(`?<Constant "1\\n">` >> 8) & 0xff
    \   000045   7900         MOV     R1,#0x0
    \   000047   12....       LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
    \                     ??Uart0_Cb_0:
@@ -1394,7 +1394,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
 
    \                                 In  segment XDATA_ID, align 1, keep-with-next
    \                     `?<Initializer for myStartRetryDelay>`:
-   \   000000   8813         DW 5000
+   \   000000   E803         DW 1000
 
    \                                 In  segment XDATA_ID, align 1, keep-with-next
    \                     `?<Initializer for myTempReportPeriod>`:
@@ -1406,11 +1406,11 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
 
    \                                 In  segment XDATA_ID, align 1, keep-with-next
    \                     `?<Initializer for myBindRetryDelay>`:
-   \   000000   A00F         DW 4000
+   \   000000   E803         DW 1000
 
    \                                 In  segment XDATA_ID, align 1, keep-with-next
    \                     `?<Initializer for myIdReportPeriod>`:
-   \   000000   A00F         DW 4000
+   \   000000   D007         DW 2000
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     `??zb_HandleOsalEvent::?relay`:
@@ -1469,8 +1469,8 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
    \            63653A00
 
    \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "2\\n">`:
-   \   000000   320A00       DB "2\012"
+   \                     `?<Constant "1\\n">`:
+   \   000000   310A00       DB "1\012"
 
    \                                 In  segment XDATA_ROM_C, align 1
    \                     __Constant_42160000:
@@ -1515,7 +1515,7 @@ E:\DAT\bau-quang\CodeZigbee - CC2530\Projects\zstack\Samples\SimpleApp\Source\Si
 
    Bytes  Function/Label
    -----  --------------
-       3  ?<Constant "2\n">
+       3  ?<Constant "1\n">
        8  ?<Constant "\nENTRY\n">
       12  ?<Constant "\nEndDevice:">
        2  ?<Initializer for myBatteryCheckPeriod>

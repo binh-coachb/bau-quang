@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// IAR C/C++ Compiler V9.30.3.3983 for 8051               29/Apr/2017  14:51:56
+// IAR C/C++ Compiler V9.30.3.3983 for 8051               30/Apr/2017  20:52:43
 // Copyright 2004-2016 IAR Systems AB.
 // Standalone license - IAR Embedded Workbench for 8051
 //
@@ -546,7 +546,7 @@ ADCH:
 //   16 /*********************************************************************
 //   17  * CONSTANTS
 //   18  */
-//   19 #define MY_ID  (uint8)2
+//   19 #define MY_ID  (uint8)1
 //   20 // Application States
 //   21 #define APP_INIT                           0    // Initial state
 //   22 #define APP_START                          1    // Sensor has joined network
@@ -588,7 +588,7 @@ myAppState:
 //   52 
 
         RSEG XDATA_I:XDATA:NOROOT(0)
-//   53 static uint16 myStartRetryDelay = 5000;      // milliseconds
+//   53 static uint16 myStartRetryDelay = 1000;      // milliseconds
 myStartRetryDelay:
         DATA16
         DS 2
@@ -612,7 +612,7 @@ myBatteryCheckPeriod:
         REQUIRE __INIT_XDATA_I
 
         RSEG XDATA_I:XDATA:NOROOT(0)
-//   56 static uint16 myBindRetryDelay = 4000;       // milliseconds
+//   56 static uint16 myBindRetryDelay = 1000;       // milliseconds
 myBindRetryDelay:
         DATA16
         DS 2
@@ -620,7 +620,7 @@ myBindRetryDelay:
         REQUIRE __INIT_XDATA_I
 
         RSEG XDATA_I:XDATA:NOROOT(0)
-//   57 static uint16 myIdReportPeriod = 4000;     // milliseconds
+//   57 static uint16 myIdReportPeriod = 2000;     // milliseconds
 myIdReportPeriod:
         DATA16
         DS 2
@@ -1267,7 +1267,7 @@ zb_HandleOsalEvent:
         MOVX    @DPTR,A
 //  180     pData[1] =  MY_ID;
         INC     DPTR
-        MOV     A,#0x2
+        MOV     A,#0x1
         LCALL   ?Subroutine2 & 0xFFFF
 //  181     zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
 ??CrossCallReturnLabel_2:
@@ -2484,15 +2484,15 @@ Uart0_Cb:
         MOV     R1,#0x0
         LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
         ; Setup parameters for call to function osal_strlen
-        MOV     R2,#`?<Constant "2\\n">` & 0xff
-        MOV     R3,#(`?<Constant "2\\n">` >> 8) & 0xff
+        MOV     R2,#`?<Constant "1\\n">` & 0xff
+        MOV     R3,#(`?<Constant "1\\n">` >> 8) & 0xff
         LCALL   `??osal_strlen::?relay`; Banked call to: osal_strlen
         MOV     ?V2,R2
         ; Setup parameters for call to function HalUARTWrite
         MOV     R4,?V2
         MOV     R5,#0x0
-        MOV     R2,#`?<Constant "2\\n">` & 0xff
-        MOV     R3,#(`?<Constant "2\\n">` >> 8) & 0xff
+        MOV     R2,#`?<Constant "1\\n">` & 0xff
+        MOV     R3,#(`?<Constant "1\\n">` >> 8) & 0xff
         MOV     R1,#0x0
         LCALL   `??HalUARTWrite::?relay`; Banked call to: HalUARTWrite
 ??Uart0_Cb_0:
@@ -2536,7 +2536,7 @@ Uart0_Cb:
         RSEG XDATA_ID:CODE:NOROOT(0)
 `?<Initializer for myStartRetryDelay>`:
         DATA16
-        DW 5000
+        DW 1000
 
         RSEG XDATA_ID:CODE:NOROOT(0)
 `?<Initializer for myTempReportPeriod>`:
@@ -2551,12 +2551,12 @@ Uart0_Cb:
         RSEG XDATA_ID:CODE:NOROOT(0)
 `?<Initializer for myBindRetryDelay>`:
         DATA16
-        DW 4000
+        DW 1000
 
         RSEG XDATA_ID:CODE:NOROOT(0)
 `?<Initializer for myIdReportPeriod>`:
         DATA16
-        DW 4000
+        DW 2000
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 `??zb_HandleOsalEvent::?relay`:
@@ -2633,8 +2633,8 @@ Uart0_Cb:
 
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA8
-`?<Constant "2\\n">`:
-        DB "2\012"
+`?<Constant "1\\n">`:
+        DB "1\012"
 
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA32

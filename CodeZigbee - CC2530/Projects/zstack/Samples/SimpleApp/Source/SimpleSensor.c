@@ -16,7 +16,7 @@
 /*********************************************************************
  * CONSTANTS
  */
-#define MY_ID  (uint8)2
+#define MY_ID  (uint8)1
 // Application States
 #define APP_INIT                           0    // Initial state
 #define APP_START                          1    // Sensor has joined network
@@ -50,11 +50,11 @@
 
 static uint8 myAppState = APP_INIT;
 
-static uint16 myStartRetryDelay = 5000;      // milliseconds
+static uint16 myStartRetryDelay = 1000;      // milliseconds
 static uint16 myTempReportPeriod = 5000;     // milliseconds
 static uint16 myBatteryCheckPeriod = 15000;   // milliseconds
-static uint16 myBindRetryDelay = 4000;       // milliseconds
-static uint16 myIdReportPeriod = 4000;     // milliseconds
+static uint16 myBindRetryDelay = 1000;       // milliseconds
+static uint16 myIdReportPeriod = 2000;     // milliseconds
 
 static void Uart0_Cb(uint8 port, uint8 event);
 
