@@ -47,11 +47,18 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 SoftwareSerial Zigbee(A5, 1); // RX, TX
 
+int bandohientai=0;
 int vitrihientai=1;
 int vitridich=0;
 int DAI, RONG;
 unsigned long timer1, timer2, timer3;
 unsigned char cuongdo[3] = {0, 0, 0};//Endd1, Endd2, Endd3
+
+void drawBorder ();
+void hienthibando(int bd);
+void bmpDraw(char *filename, int x, int y);
+uint32_t read32(File f);
+uint16_t read16(File f);
 
 void setup(void) {
   Serial.begin(9600);
@@ -87,68 +94,71 @@ void setup(void) {
   tft.setTextColor(DEN);
   tft.println(F("Ten do an"));
 
-  waitOneTouch();
+//  waitOneTouch();
 
-  tft.fillScreen(DEN);
+//  tft.fillScreen(DEN);
   
-  RONG = tft.width()/3;
-  DAI = tft.height()/8;
+//  RONG = tft.width()/3;
+//  DAI = tft.height()/8;
   
-  tft.fillRect(0, 0, RONG, DAI, DO);
-  tft.setCursor (RONG/2-2, DAI/2-3);
-  tft.setTextSize (2);
-  tft.setTextColor(DEN);
-  tft.println(F("1"));
+//  tft.fillRect(0, 0, RONG, DAI, DO);
+//  tft.setCursor (RONG/2-2, DAI/2-3);
+//  tft.setTextSize (2);
+//  tft.setTextColor(DEN);
+//  tft.println(F("1"));
   
-  tft.fillRect(RONG, 0, RONG, DAI, XANHLA);
-  tft.setCursor (RONG*3/2-2, DAI/2-3);
-  tft.println(F("2"));
+//  tft.fillRect(RONG, 0, RONG, DAI, XANHLA);
+//  tft.setCursor (RONG*3/2-2, DAI/2-3);
+//  tft.println(F("2"));
   
-  tft.fillRect(RONG*2, 0, RONG, DAI, HONG);
-  tft.setCursor (RONG*5/2-2, DAI/2-3);
-  tft.println(F("3"));
+//  tft.fillRect(RONG*2, 0, RONG, DAI, HONG);
+//  tft.setCursor (RONG*5/2-2, DAI/2-3);
+//  tft.println(F("3"));
 
-  capnhatbando(vitrihientai*10 + vitridich); 
+//  capnhatbando(vitrihientai*10 + vitridich); 
 }
 
 
 void loop()
 {
-  capnhatvitri(); 
-  
-  TSPoint p = ts.getPoint();
-  pinMode(XM, OUTPUT);
-  pinMode(YP, OUTPUT);
-  
-  if (p.z > MINPRESSURE && p.z < MAXPRESSURE) 
-  {  
-    p.x = 1023 - p.x;//rotate -90
-    p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
-    p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());;
+  if(Zigbee.available() < 3) return;
 
-    if(p.y < DAI && p.x < RONG)
+  String dulieu = Zigbee.readString();
+  Serial.print("\nCo thong bao:");
+  Serial.println(dulieu);
+  char i = 0, k = dulieu.length();
+  int data;
+  while(i < k){
+    if(dulieu.charAt(i) == '#' && i+2 < k )
     {
-      vitridich = 1;
-      Serial.print("Dich den ");
-      Serial.println(vitridich);
-      capnhatbando(vitrihientai*10 + vitridich);        
-    }
-    else if(p.y < DAI && p.x < RONG*2)
-    {      
-      vitridich = 2;
-      Serial.print("Dich den ");
-      Serial.println(vitridich);
-      capnhatbando(vitrihientai*10 + vitridich);        
-    }
-    else if(p.y < DAI )
-    {      
-      vitridich = 3;
-      Serial.print("Dich den ");
-      Serial.println(vitridich);
-      capnhatbando(vitrihientai*10 + vitridich);        
-    }
-            
+      if(dulieu.charAt(i+1) == 1 || dulieu.charAt(i+1) == '1'){
+        data = 11;
+      }else if(dulieu.charAt(i+1) == 2  || dulieu.charAt(i+1) == '2'){
+        data = 22;
+      }else if(dulieu.charAt(i+1) == 3  || dulieu.charAt(i+1) == '3'){
+        data = 33;
+      }
+      i += 3;
+    }else
+      i++;
+  }    
+
+  if(bandohientai != data) {    
+    bandohientai = data;
+    hienthibando(bandohientai);
   }
+}
+
+
+void hienthibando(int bd)
+{    
+    char s[7] = {'1','1','.','b','m','p',0};
+    itoa(bandohientai, s, 10);
+    s[2] = '.';
+    bmpDraw(s,0, 0);
+    Serial.print("Ban do hien tai ");
+    Serial.println(bd);
+  
 }
 
 
@@ -275,7 +285,8 @@ void bmpDraw(char *filename, int x, int y) {
   // Open requested file on SD card
   if ((bmpFile = SD.open(filename)) == NULL) {
     Serial.println(F("File khong tim thay"));
-    while(1);
+    //while(1);
+    return;
   }
 
   // Parse BMP header

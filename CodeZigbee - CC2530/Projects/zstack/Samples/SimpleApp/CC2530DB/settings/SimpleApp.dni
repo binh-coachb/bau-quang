@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=1569720402
+Checksum=-416540143
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -22,8 +22,7 @@ Category=_ 0
 LoggingEnabled=_ 0
 LogFile=_ ""
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\SimpleSensor.c}.181.5" 0 0 0 0 "" 0 ""
-Count=1
+Count=0
 [ChipconEmu]
 Stop timers on halt=0
 Leave target running=1

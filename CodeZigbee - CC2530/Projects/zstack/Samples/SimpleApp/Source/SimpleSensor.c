@@ -29,6 +29,7 @@
 #define MY_REPORT_BATT_EVT          0x0004
 #define MY_FIND_COLLECTOR_EVT       0x0008
 #define ID_REPORT_EVT               0x0010
+#define CHECK_BUT_EVT               0x0020
 
 // ADC definitions for CC2430/CC2530 from the hal_adc.c file
 #if defined (HAL_MCU_CC2430) || defined (HAL_MCU_CC2530)
@@ -55,6 +56,7 @@ static uint16 myTempReportPeriod = 5000;     // milliseconds
 static uint16 myBatteryCheckPeriod = 15000;   // milliseconds
 static uint16 myBindRetryDelay = 1000;       // milliseconds
 static uint16 myIdReportPeriod = 2000;     // milliseconds
+static uint16 myCheckButPeriod = 200;     // milliseconds
 
 static void Uart0_Cb(uint8 port, uint8 event);
 
@@ -80,6 +82,7 @@ const cId_t zb_InCmdList[NUM_IN_CMD_SENSOR] =
 #define TEMP_REPORT     0x01
 #define BATTERY_REPORT  0x02
 #define ID_REPORT       0x04
+#define BUT_REPORT      0x08
 
 // Define SimpleDescriptor for Sensor device
 const SimpleDescriptionFormat_t zb_SimpleDesc =
@@ -105,6 +108,7 @@ static void myApp_StopReporting( void );
 static uint8 myApp_ReadTemperature( void );
 static uint8 myApp_ReadBattery( void );
 
+
 /*****************************************************************************
  * @fn          zb_HandleOsalEvent
  *
@@ -124,6 +128,11 @@ void zb_HandleOsalEvent( uint16 event )
   
   if ( event & ZB_ENTRY_EVENT )
   {
+    P1SEL &= 0xFD;  /*Set P1_1 as GPIO */
+    P1DIR &= 0xFD; /*Set P1_1 as input */
+    
+    osal_start_timerEx( sapi_TaskID, CHECK_BUT_EVT, myCheckButPeriod );
+    
     halUARTCfg_t uConfig;
     uConfig.configured = TRUE; 
     uConfig.baudRate = HAL_UART_BR_9600;
@@ -149,7 +158,14 @@ void zb_HandleOsalEvent( uint16 event )
     
     zb_StartRequest();
   }
-  if ( event & MY_REPORT_TEMP_EVT )
+  
+  if ( event & MY_FIND_COLLECTOR_EVT )
+  {
+    //HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
+    zb_BindDevice( TRUE, SENSOR_REPORT_CMD_ID, (uint8 *)NULL );
+  }
+  
+/*  if ( event & MY_REPORT_TEMP_EVT )
   {
     pData[0] = TEMP_REPORT;
     pData[1] =  myApp_ReadTemperature();
@@ -168,12 +184,6 @@ void zb_HandleOsalEvent( uint16 event )
     osal_start_timerEx( sapi_TaskID, MY_REPORT_BATT_EVT, myBatteryCheckPeriod );
   }
 
-  if ( event & MY_FIND_COLLECTOR_EVT )
-  {
-    //HalUARTWrite(HAL_UART_PORT_0,"FIND_COLLECTOR\n", (byte)osal_strlen("FIND_COLLECTOR\n"));  
-    zb_BindDevice( TRUE, SENSOR_REPORT_CMD_ID, (uint8 *)NULL );
-  }
-  
   if ( event & ID_REPORT_EVT )
   {
     pData[0] = ID_REPORT;
@@ -182,6 +192,20 @@ void zb_HandleOsalEvent( uint16 event )
     //0xFFFE Gui toi thiet bi dang Bind
     //HalUARTWrite(HAL_UART_PORT_0,"REPORT_ID\n", (byte)osal_strlen("REPORT_ID\n")); 
     osal_start_timerEx( sapi_TaskID, ID_REPORT_EVT, myIdReportPeriod );
+  }
+*/
+  if ( event & CHECK_BUT_EVT )
+  {
+    if( myAppState == APP_BOUND && P1_1 == 1 )    
+    {
+      pData[0] = BUT_REPORT;
+      pData[1] =  MY_ID;
+      zb_SendDataRequest( 0xFFFE, SENSOR_REPORT_CMD_ID, 2, pData, 0, AF_ACK_REQUEST, 0 );
+      //0xFFFE Gui toi thiet bi dang Bind
+      HalUARTWrite(HAL_UART_PORT_0,"BUT_REPORT\n", (byte)osal_strlen("BUT_REPORT\n")); 
+    
+    }
+    osal_start_timerEx( sapi_TaskID, CHECK_BUT_EVT, myCheckButPeriod );
   }
 
 }
@@ -254,7 +278,7 @@ void zb_SendDataConfirm( uint8 handle, uint8 status )
     zb_BindDevice( FALSE, SENSOR_REPORT_CMD_ID, (uint8 *)NULL );
 
     myAppState = APP_START;
-    myApp_StopReporting();
+    //myApp_StopReporting();
 
     // Start process of finding new collector with minimal delay
     osal_start_timerEx( sapi_TaskID, MY_FIND_COLLECTOR_EVT, 1 );
@@ -286,7 +310,8 @@ void zb_BindConfirm( uint16 commandId, uint8 status )
     myAppState = APP_BOUND;
 
     //Start reporting sensor values
-    myApp_StartReporting();
+    //myApp_StartReporting();
+    
   }
   else
   {
@@ -348,6 +373,8 @@ void zb_ReceiveDataIndication( uint16 source, uint16 command, uint16 len, uint8 
   //HalUARTWrite(HAL_UART_PORT_0,"ReceiveDataIndication\n", (byte)osal_strlen("ReceiveDataIndication\n")); 
   
 }
+
+
 /******************************************************************************
  * @fn          my_StartReporting
  *
